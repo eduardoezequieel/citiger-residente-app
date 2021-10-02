@@ -263,29 +263,32 @@ if (isset($_GET['action'])) {
                 break;
             //Caso para cerrar la sesión
             case 'logOut':
-                unset($_SESSION['idresidente']);
+                session_destroy();
                 $result['status'] = 1;
                 $result['message'] = 'Sesión eliminada correctamente';
                 break;
             //Caso para setear el light mode
             case 'setLightMode':
+                $_SESSION['idresidente'] = $_GET['id'];
                 if ($usuarios->setLightMode()) {
                     $result['status'] = 1;
                     $result['message'] = 'Modo claro activado correctamente.';
-                    $_SESSION['modo_residente'] = 'light';
                 } else {
                     $result['exception'] = 'Ocurrio un problema-';
                 }
+                session_destroy();
                 break;
             //Caso para setear el dark mode
             case 'setDarkMode':
+                $_SESSION['idresidente'] = $_GET['id'];
                 if ($usuarios->setDarkMode()) {
                     $result['status'] = 1;
                     $result['message'] = 'Modo oscuro activado correctamente.';
-                    $_SESSION['modo_residente'] = 'dark';
+                    
                 } else {
                     $result['exception'] = 'Ocurrio un problema-';
                 }
+                session_destroy();
                 break;
             //Caso para leer la información del usuario logueado
             case 'readProfile2':
