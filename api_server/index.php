@@ -124,7 +124,7 @@ if (isset($_GET['action'])) {
                 break;
             //Caso para cargar los historiales de sesión fallidos de un usuario
             case 'readFailedSessions':
-                if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                if ($usuarios->setIdResidente($_GET['id'])) {
                     if ($result['dataset'] = $usuarios->readFailedSessions()) {
                         $result['status'] = 1;
                     } else {
@@ -141,7 +141,7 @@ if (isset($_GET['action'])) {
                 break;
             //Obtener el modo de autenticación de un usuario
             case 'getAuthMode':
-                if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                if ($usuarios->setIdResidente($_GET['id'])) {
                     if ($result['dataset'] = $usuarios->getAuthMode()) {
                         $result['status'] = 1;
                     } else {
@@ -158,7 +158,7 @@ if (isset($_GET['action'])) {
                 break;
             //Caso para actualizar la preferencia del modo de autenticacion del usuario
             case 'updateAuthMode':
-                if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                if ($usuarios->setIdResidente($_GET['id'])) {
                     if ($usuarios->checkPassword($_POST['txtContrasenaActualAuth'])) {
                         if ($_POST['switchValue'] == 'Si' || $_POST['switchValue'] == 'No') {
                             if ($verificacion = $usuarios->checkIfEmailIsValidated()) {
@@ -195,7 +195,7 @@ if (isset($_GET['action'])) {
                 $_POST = $usuarios->validateForm($_POST);
                 if ($_POST['txtNuevoCorreo'] == $_POST['txtConfirmarCorreo']) {
                     if ($usuarios->setCorreo($_POST['txtNuevoCorreo'])) {
-                        if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                        if ($usuarios->setIdResidente($_GET['id'])) {
                             if ($usuarios->checkPassword($_POST['txtPassword'])) {
                                 if ($usuarios->changeEmail()) {
                                     if ($usuarios->emailNotValidated()) {
@@ -224,7 +224,7 @@ if (isset($_GET['action'])) {
                 break;
             //Caso para actualizar el nombre de usuario
             case 'updateUser':
-                if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                if ($usuarios->setIdResidente($_GET['id'])) {
                     if ($usuarios->checkPassword($_POST['txtPassword2'])) {
                         if ($usuarios->setUsername($_POST['txtNuevoUsuario'])) {
                             if ($_POST['txtNuevoUsuario'] == $_POST['txtConfirmarUsuario']) {
@@ -289,6 +289,7 @@ if (isset($_GET['action'])) {
                 break;
             //Caso para leer la información del usuario logueado
             case 'readProfile2':
+                $_SESSION['idresidente'] = $_GET['id'];
                 if ($result['dataset'] = $usuarios->readProfile2()) {
                     $result['status'] = 1;
                 } else {
@@ -298,10 +299,12 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Usuario inexistente';
                     }
                 }
+                session_destroy();
                 break;
             //Caso para editar información del perfil
             case 'editProfile':
                 $_POST = $usuarios->validateForm($_POST);
+                $_SESSION['idresidente'] = $_GET['id'];
                 if ($usuarios->setDui($_POST['txtDUI'])) {
                     if ($usuarios->setTelefonof($_POST['txtTelefonoFijo'])) {
                         if ($usuarios->setTelefonom($_POST['txtTelefonomovil'])) {
@@ -341,10 +344,12 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'DUI invalido';
                 }
+                session_destroy();
                 break;
             //Caso para actualizar una foto
             case 'updateFoto':
                 $_POST = $usuarios->validateForm($_POST);
+                $_SESSION['idresidente'] = $_GET['id'];
                 if ($usuarios->setFoto($_FILES['archivo_usuario'])) {
                     if ($data = $usuarios->readProfile2()) {
                         if ($usuarios->updateFoto($data['foto'])) {
@@ -364,11 +369,12 @@ if (isset($_GET['action'])) {
                 }else{
                     $result['exception'] = 'Usuario inválido';
                 }
+                session_destroy();
                 break;
             //Caso para actualizar la contraseña (Dentro del sistema)
             case 'updatePassword':
                 $_POST = $usuarios->validateForm($_POST);
-                if ($usuarios->setIdResidente($_SESSION['idresidente'])) {
+                if ($usuarios->setIdResidente($_GET['id'])) {
                     if ($usuarios->checkPassword($_POST['txtContrasenaActual'])) {
                         if ($_POST['txtNuevaContrasena'] == $_POST['txtConfirmarContrasena']) {
                             if ($_POST['txtNuevaContrasena'] != $_POST['txtContrasenaActual'] ||
@@ -455,6 +461,7 @@ if (isset($_GET['action'])) {
                     session_destroy();
                     break;
                 case 'readDevices':
+                    $_SESSION['idresidente'] = $_GET['id'];
                     // Ejecutamos la funcion del modelo
                     if ($result['dataset'] = $usuarios->getSesionHistory()) {
                         $result['status'] = 1;

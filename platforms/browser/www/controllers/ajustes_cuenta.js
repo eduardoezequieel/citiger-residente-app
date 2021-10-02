@@ -1,6 +1,7 @@
-const API_USUARIOS = '../../app/api/residente/index.php?action=';
+const API_USUARIOS = 'http://34.125.57.125/app/api/residente/index.php?action=';
+//Captura los parametros de la url
+var params = new URLSearchParams(location.search);
 document.addEventListener('DOMContentLoaded', function () {
-
     // Se declara e inicializa un objeto para obtener la fecha y hora actual.
     let today = new Date();
     // Se declara e inicializa una variable para guardar el día en formato de 2 dígitos.
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('txtFechaNacimiento').setAttribute('value', date);
     readRows3(API_USUARIOS);
 
-    fetch(API_USUARIOS + 'readProfile2', {
+    fetch(API_USUARIOS + `readProfile2&id=${params.get('id')}`, {
         method: 'get',
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -37,9 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('lblFechaNac').textContent = (response.dataset.fechanacimiento);
                     document.getElementById('lblUser').textContent = (response.dataset.username);
                     document.getElementById('lblCorreo').textContent = (response.dataset.correo);
-
-
-
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
@@ -51,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(error);
     });
 
-    fetch(API_USUARIOS + 'getAuthMode', {
+    fetch(API_USUARIOS + `getAuthMode&id=${params.get('id')}`, {
         method: 'get',
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -82,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //Se cargan los registros de sesiones fallidas
 function readFailedSessions(){
-    fetch(API_USUARIOS + 'readFailedSessions', {
+    fetch(API_USUARIOS + `readFailedSessions&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -153,7 +151,7 @@ document.getElementById('password-form').addEventListener('submit',function(even
     //Evitamos recargar la pagina
     event.preventDefault();
     //fetch 
-    fetch(API_USUARIOS + 'updatePassword', {
+    fetch(API_USUARIOS + `updatePassword&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('password-form'))
     }).then(function (request) {
@@ -163,7 +161,7 @@ document.getElementById('password-form').addEventListener('submit',function(even
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     closeModal('administrarContrasena');
-                    sweetAlert(1, response.message, 'ajustes_cuenta');
+                    sweetAlert(1, response.message, `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
@@ -196,7 +194,7 @@ function showHidePassword2(checkbox, pass1, pass2, pass3) {
 
 function readDataOnModal() {
     // Se abre la caja de dialogo (modal) que contiene el formulario para editar perfil, ubicado en el archivo de las
-    fetch(API_USUARIOS + 'readProfile2', {
+    fetch(API_USUARIOS + `readProfile2&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -230,7 +228,7 @@ document.getElementById('admin-form').addEventListener('submit', function (event
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
 
-    fetch(API_USUARIOS + 'editProfile', {
+    fetch(API_USUARIOS + `editProfile&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('admin-form'))
     }).then(function (request) {
@@ -241,7 +239,7 @@ document.getElementById('admin-form').addEventListener('submit', function (event
                 if (response.status) {
 
                     // Se muestra un mensaje y se direcciona a la página web de bienvenida para actualizar el nombre del usuario en el menú.
-                    sweetAlert(1, response.message, 'ajustes_cuenta.php');
+                    sweetAlert(1, response.message, `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
@@ -310,7 +308,7 @@ document.getElementById('archivo_usuario').addEventListener('change', function (
 
 document.getElementById('img-form').addEventListener('submit', function (event) {
     event.preventDefault();
-    fetch(API_USUARIOS + 'updateFoto', {
+    fetch(API_USUARIOS + `updateFoto&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('img-form'))
     }).then(function (request) {
@@ -320,7 +318,7 @@ document.getElementById('img-form').addEventListener('submit', function (event) 
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     // Se muestra un mensaje y se direcciona a la página web de bienvenida para actualizar los datos en el menú.
-                    window.location.href = 'ajustes_cuenta.php';
+                    window.location.href = `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
@@ -339,7 +337,7 @@ document.getElementById('auth-form').addEventListener('submit',function(event){
     //Evitamos recargar la pagina
     event.preventDefault();
     //fetch
-    fetch(API_USUARIOS + 'updateAuthMode', {
+    fetch(API_USUARIOS + `updateAuthMode&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('auth-form'))
     }).then(function (request) {
@@ -350,9 +348,9 @@ document.getElementById('auth-form').addEventListener('submit',function(event){
                 if (response.status) {
                     closeModal('administrarAuth');
                     if (document.getElementById('switchValue').value == 'Si') {
-                        sweetAlert(1, 'Usted ha activado el factor de autenticación en dos pasos. Notará los cambios la proxima vez que inicié sesión.', 'ajustes_cuenta.php');
+                        sweetAlert(1, 'Usted ha activado el factor de autenticación en dos pasos. Notará los cambios la proxima vez que inicié sesión.', `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                     } else {
-                        sweetAlert(1, 'Usted ha desactivado el factor de autenticación en dos pasos. Notará los cambios la proxima vez que inicié sesión.', 'ajustes_cuenta.php');
+                        sweetAlert(1, 'Usted ha desactivado el factor de autenticación en dos pasos. Notará los cambios la proxima vez que inicié sesión.', `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                     }
                 } else {
                     sweetAlert(2, response.exception, null);
@@ -378,7 +376,7 @@ function changeInputValue(input){
 
 
 function readRows3(api) {
-    fetch(api + 'readDevices', {
+    fetch(api + `readDevices&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -447,7 +445,7 @@ document.getElementById('btnModalContraseña').addEventListener('click',function
     //Evitamos recargar la pagina
     event.preventDefault();
     //Verificamos si el usuario tiene validado su correo
-    fetch(API_USUARIOS + 'checkIfEmailIsValidated', {
+    fetch(API_USUARIOS + `checkIfEmailIsValidated&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -477,7 +475,7 @@ document.getElementById('btnModalAdministrarAuth').addEventListener('click',func
     //Evitamos recargar la pagina
     event.preventDefault();
     //Verificamos si el usuario tiene validado su correo
-    fetch(API_USUARIOS + 'checkIfEmailIsValidated', {
+    fetch(API_USUARIOS + `checkIfEmailIsValidated&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -507,7 +505,7 @@ document.getElementById('btnAdministrarUsuarioModal').addEventListener('click',f
     //Evitamos recargar la pagina
     event.preventDefault();
     //Verificamos si el usuario tiene validado su correo
-    fetch(API_USUARIOS + 'checkIfEmailIsValidated', {
+    fetch(API_USUARIOS + `checkIfEmailIsValidated&id=${params.get('id')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -537,7 +535,7 @@ document.getElementById('email-form').addEventListener('submit',function(event){
     //Evitamos recargar la pagina
     event.preventDefault();
      //Verificamos si el usuario tiene validado su correo
-     fetch(API_USUARIOS + 'actualizarCorreo', {
+     fetch(API_USUARIOS + `actualizarCorreo&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('email-form'))
     }).then(function (request) {
@@ -547,7 +545,7 @@ document.getElementById('email-form').addEventListener('submit',function(event){
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     closeModal('administrarEmail');
-                    sweetAlert(1, response.message, 'dashboard.php');
+                    sweetAlert(1, response.message, `dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${document.getElementById('txtNuevoCorreo').value}&ip=${params.get('ip')}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }
@@ -565,7 +563,7 @@ document.getElementById('username-form').addEventListener('submit',function(even
     //Evitamos recargar la pagina
     event.preventDefault();
      //Verificamos si el usuario tiene validado su correo
-     fetch(API_USUARIOS + 'updateUser', {
+     fetch(API_USUARIOS + `updateUser&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('username-form'))
     }).then(function (request) {
@@ -575,7 +573,7 @@ document.getElementById('username-form').addEventListener('submit',function(even
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     closeModal('administrarUsuario');
-                    sweetAlert(1, response.message, 'ajustes_cuenta.php');
+                    sweetAlert(1, response.message, `ajustes_cuenta.html?id=${params.get('id')}&alias=${document.getElementById('txtNuevoUsuario').value}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }

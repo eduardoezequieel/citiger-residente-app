@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es">
+
+<head onload="loadPage()">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/citigerstyles.css">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <link href="../css/lightbox.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../img/iconocitiger.png" />
+
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <title>'.$titulo.'</title>
+</head>
+
+<body>
+
+    <!-- Inicio del Sidebar -->
+    <div class="vertical-nav colorCitiger" id="sidebar">
+        <div class="py-3 px-3 colorCitiger">
+            <div class="media d-flex">
+                <a href="dashboard.html" class="btn btnInicio"><img id="imgDashboard" src="../img/citigerDarkLogo2.png"
+                        alt="" class="img-fluid" width="140px"></a>
+            </div>
+        </div>
+
+        <!-- Perfil -->
+        <div id="tarjeta">
+            <div id="tarjetaPerfil" class="p-3">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="../img/dashboard_img/residentes_fotos/' . $_SESSION['foto_residente'] . '"
+                            id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
+                    <div class="col-9">
+                        <label for="ajustes" class="pl-4 pt-2" id="usuario">' . $_SESSION['username'] .
+                            '</label>
+                        <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
+                        <input type="text" id="txtModo" class="d-none" value="'. $_SESSION['modo_residente'].'">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12" id="filaBotones">
+                        <div id="botones">
+                            <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil" id="ajustes"></a>
+                            <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
+                                id="cerrar"></a>
+                            <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode" onclick="lightMode2()"></a>
+                            <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode" onclick="darkMode2()"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Navegación -->
+        <ul class="nav flex-column colorCitiger mt-4">
+            <li class="nav-item">
+                <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                    <i class="fas fa-home mr-3 tamañoIconos"></i>
+                    Alquileres
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="denuncias.html" class="nav-link categoriasFuente">
+                    <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
+                    Denuncias
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="visitas.html" class="nav-link categoriasFuente">
+                    <i class="fas fa-car mr-3 tamañoIconos"></i>
+                    Visitas
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Fin del sidebar -->
+
+    <!-- Inicio del navbar para dispositivos moviles -->
+    <nav id="navbar" class="d-none navbar sticky-top navbar-expand-lg">
+        <a class="navbar-brand" href="dashboard.html">
+            <img src="../img/citigerWhiteLogo2.png" alt="#" id="imgDashboard2" class="img-fluid" width="120px"></a>
+        </a>
+        <button class="btn bg-darken2 mt-2 float-right" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="fas fa-caret-down"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <!-- Perfil -->
+                    <div id="tarjeta">
+                        <div id="tarjetaPerfil" class="p-3">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="../img/dashboard_img/residentes_fotos/' . $_SESSION['foto_residente'] . '"
+                                        id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px"
+                                        height="60px"> </div>
+                                <div class="col-9">
+                                    <label for="ajustes" class="pl-4 pt-2" id="usuario">' . $_SESSION['username'] .
+                                        '</label>
+                                    <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
+                                    <input type="text" id="txtModo" class="d-none"
+                                        value="'. $_SESSION['modo_residente'].'">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12" id="filaBotones">
+                                    <div id="botones">
+                                        <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil"
+                                            id="ajustes"></a>
+                                        <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
+                                            id="cerrar"></a>
+                                        <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode2"
+                                            onclick="lightMode2()"></a>
+                                        <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode2"
+                                            onclick="darkMode2()"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav mr-auto d-flex justify-content-center align-items-center colorCitiger mt-4 bg-dark">
+                <div>
+                    <li class="nav-item">
+                        <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                            <i class="fas fa-home mr-3 tamañoIconos"></i>
+                            Alquileres
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="denuncias.html" class="nav-link categoriasFuente">
+                            <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
+                            Denuncias
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="visitas.html" class="nav-link categoriasFuente">
+                            <i class="fas fa-car mr-3 tamañoIconos"></i>
+                            Visitas
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenedor de la Pagina -->
+    <div class="page-content p-3" id="content">
+        <div id="cuadroContenido">
+            <button id="sidebarCollapse" type="button" class="btn bg-darken"><i
+                    class="fa fa-bars categoriasFuente tamañoIconos"></i><small
+                    class="text-uppercase font-weight-bold"></small></button>
+
+            <!-- Desde aqui comienza el contenido -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <h1 class="tituloPagina text-center">Denuncias</h1>
+                </div>
+            </div>
+            <!-- Controles del Inicio -->
+            <div class="row justify-content-center mt-3 px-5 animate__animated animate__bounceIn">
+                <div class="col-xl-12 d-flex justify-content-center col-md-12 col-sm-12 col-xs-12 centrarBotones">
+                    <div class="mt-4 mx-3 mb-3">
+                        <a href="#" id="btnInsertDialog" data-toggle="modal" data-target="#administrarDenuncia"
+                            class="btn botonesListado"><span
+                                class="fas fa-plus mr-3 tamañoIconosBotones"></span>Nuevo</a>
+                    </div>
+
+                    <form class="mx-3 mb-2" method="post" id="search-form">
+                        <h1 class="tituloCajaTextoFormulario">Busqueda:</h1>
+                        <input type="text" class="form-control buscador" id="search" name="search"
+                            aria-describedby="emailHelp" placeholder="{ Fecha }">
+                    </form>
+
+                    <form method="post" id="filtrarEstadoDenuncia-form" class="mx-3">
+                        <h1 class="tituloCajaTextoFormulario">Estado Denuncia:</h1>
+                        <!-- Combobox, si se desea usar, copiar todo el div que incluye la clase
+                    cbCitiger, para cambiarle el tamaño, crear un id en cbCitiger y usar el width
+                    deseado en el combobox  -->
+                        <div class="cbCitigerBusqueda">
+                            <select class="custom-select" id="cbEstadoDenuncia">
+                                <option selected="">Seleccionar...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <input type="number" name="idEstadoDenuncia" id="idEstadoDenuncia" class="d-none">
+                        <button class="d-none" id="btnFiltrarDenuncia" type="submit"></button>
+                    </form>
+
+                    <div class="mt-4 mx-3 mb-3">
+                        <a href="#" id="btnReiniciar" data-toggle="#" data-target="#" class="btn botonesListado"><span
+                                class="fas fa-undo mr-3 tamañoIconosBotones"></span>Reiniciar</a>
+                    </div>
+                </div>
+            </div><br>
+
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="tituloDato2 text-center">Historial de Denuncias</h1>
+                </div>
+            </div>
+
+            <!-- Desde aqui comienza la tabla -->
+            <div
+                class="row mt-3 justify-content-center table-responsive animate__animated animate__bounceInUp tablaResponsive">
+                <div class="col-12 justify-content-center align-items-center text-center">
+                    <table class="table table-borderless citigerTable" id="data-table">
+                        <thead>
+                            <!-- Columnas-->
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-rows">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Desde aqui termina la tabla -->
+
+        </div>
+
+    </div>
+    <!-- Final del contenido -->
+
+    <!-- Modal para asignar denuncias -->
+    <div class="modal fade" id="administrarDenuncia" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content justify-content-center px-3 py-2">
+                <!-- Cabecera del Modal -->
+                <div class="modal-header">
+                    <!-- Titulo -->
+                    <h5 class="modal-title tituloModal" id="exampleModalLabel"><span
+                            class="fas fa-info-circle mr-4 iconoModal"></span>Denuncias</h5>
+                    <!-- Boton para Cerrar -->
+                    <button type="button" class="close closeModalButton lead" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Contenido del Modal -->
+                <div class="textoModal px-3 pb-4 mt-2">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <h1 class="tituloDato2 text-center" id="texto">Rellene el siguiente formulario:</h1>
+                        </div>
+                    </div>
+                    <form method="post" id="administrarDenuncia-form" autocomplete="off">
+                        <input type="number" name="idDenuncia" id="idDenuncia" class="d-none">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <h1 class="tituloCajaTextoFormulario" for="cdTipo">Tipo de denuncia:</h1>
+                                    <!-- Combobox, si se desea usar, copiar todo el div que incluye la clase
+                                cbCitiger, para cambiarle el tamaño, crear un id en cbCitiger y usar el width
+                                deseado en el combobox  -->
+                                    <div class="cbCitiger">
+                                        <select class="custom-select" id="cbTipo" name="cbTipo">
+                                            <option selected="">Seleccionar...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="tituloCajaTextoFormulario" for="txtDescripcion">Descripción:</label>
+                                    <textarea class="form-control cajaTextoFormulario2"
+                                        placeholder="Escriba su descripcion..." id="txtDescripcion"
+                                        name="txtDescripcion" rows="4" maxlength="200"></textarea>
+
+                                </div>
+
+                                <h1 class="tituloDato2 text-center" id="lblResp2">Respuesta:</h1>
+                                <h1 class="campoDato text-center" id="lblResp"></h1>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button id="btnAgregar" type="submit" class="btn btnAgregarFormulario"><span
+                                        class="fas fa-paper-plane mr-3 tamañoIconosBotones"></span>Enviar
+                                    Denuncia</button>
+                                <button id="btnActualizar" type="submit" class="btn btnAgregarFormulario"><span
+                                        class="fas fa-edit mr-3 tamañoIconosBotones"></span>Actualizar denuncia</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del Modal -->
+
+
+    <!-- Modal para ver denuncias-->
+    <div class="modal fade" id="verDenuncias" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content justify-content-center px-3 py-2">
+                <!-- Cabecera del Modal -->
+                <div class="modal-header">
+                    <!-- Titulo -->
+                    <h5 class="modal-title tituloModal" id="exampleModalLabel"><span
+                            class="fas fa-info-circle mr-4 iconoModal"></span>Denuncias</h5>
+                    <!-- Boton para Cerrar -->
+                    <button type="button" class="close closeModalButton lead" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br>
+                <!-- Contenido del Modal -->
+                <div class="textoModal px-3 pb-4 mt-2">
+                    <form method="post" id="administrarDenunciaEnSolucion-form" autocomplete="off">
+                        <input type="number" class="d-none" id="idDenuncia2" name="idDenuncia2">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <h1 class="tituloDato text-center">Tipo de Denuncia</h1>
+                                <h1 class="campoDato text-center mb-3" id="lblTipoDenuncia">Mantenimiento</h1>
+
+                                <h1 class="tituloDato text-center">Fecha</h1>
+                                <h1 class="campoDato text-center mb-3" id="lblFecha">11/6/2021</h1>
+
+                                <h1 class="tituloDato text-center">Descripción</h1>
+                                <h1 class="campoDato text-center mb-3" id="lblDesc">11/6/2021</h1>
+
+                                <h1 class="tituloDato text-center">Estado</h1>
+                                <h1 class="campoDato text-center mb-3" id="lblEstado">Pendiente</h1>
+
+                                <h1 class="tituloDato text-center" id="lblRespuesta2">Respuesta</h1>
+                                <h1 class="campoDato text-center mb-3" id="lblRespuesta">Pendiente</h1>
+
+
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <!-- Fin del Contenido del Modal -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del Modal -->
+    <script src="../js/lightbox-plus-jquery.min.js"></script>
+    <script src="../js/jquery-3.5.1.slim.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../controllers/denuncia.js"></script>
+    <script src="../js/datatables.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../controllers/logout.js"></script>
+    <script src="../js/components.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js">
+    </script>
+</body>
+
+</html>

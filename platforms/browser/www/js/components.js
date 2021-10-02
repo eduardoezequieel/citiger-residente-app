@@ -23,6 +23,8 @@ var modoIndex;
 var correoIndex;
 var ipIndex;
 
+var params = new URLSearchParams(location.search)
+
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded',function(){
     loadPage();
@@ -111,7 +113,7 @@ function isLogged(id,alias,foto,modo,ip) {
                         <div class="vertical-nav colorCitiger" id="sidebar">
                             <div class="py-3 px-3 colorCitiger">
                                 <div class="media d-flex">
-                                    <a href="dashboard.html" class="btn btnInicio"><img id="imgDashboard"
+                                    <a href="dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="btn btnInicio"><img id="imgDashboard"
                                             src="../img/citigerDarkLogo2.png" alt="" class="img-fluid" width="140px"></a>
                                 </div>
                             </div>
@@ -131,7 +133,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                     <div class="row mt-2">
                                         <div class="col-12" id="filaBotones">
                                             <div id="botones">
-                                                <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil" id="ajustes"></a>
+                                                <a href="ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="btn fas fa-cog botonesPerfil" id="ajustes"></a>
                                                 <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
                                                     id="cerrar"></a>
                                                 <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode" onclick="lightMode2()"></a>
@@ -168,7 +170,7 @@ function isLogged(id,alias,foto,modo,ip) {
 
                         <!-- Inicio del navbar para dispositivos moviles -->
                         <nav id="navbar" class="d-none navbar sticky-top navbar-expand-lg">
-                            <a class="navbar-brand" href="dashboard.html">
+                            <a class="navbar-brand" href="dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}">
                                 <img src="../img/citigerWhiteLogo2.png" alt="#" id="imgDashboard2" class="img-fluid"
                                     width="120px"></a>
                             </a>
@@ -196,7 +198,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                                 <div class="row mt-2">
                                                     <div class="col-12" id="filaBotones">
                                                         <div id="botones">
-                                                            <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil"
+                                                            <a href="ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="btn fas fa-cog botonesPerfil"
                                                                 id="ajustes"></a>
                                                             <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
                                                                 id="cerrar"></a>
@@ -463,7 +465,7 @@ function previewSavePicture(idDivFoto, name, foto) {
             ruta = '../../resources/img/dashboard_img/empleados_fotos/'
             break;
         case 3:
-            ruta = '../../resources/img/dashboard_img/residentes_fotos/';
+            ruta = 'http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/';
             break;
         case 4:
             ruta = '../../resources/img/dashboard_img/materiales_fotos/';

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+
+<head onload="loadPage()">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/citigerstyles.css">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/animate.min.css">
+    <link href="../css/lightbox.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../img/iconocitiger.png" />
+
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <title>'.$titulo.'</title>
+</head>
+
+<body>
+
+    <div id="nav">
+        <input type="text" id="txtModo" class="d-none">
+    </div>
+
+    <!-- Contenedor de la Pagina -->
+    <div class="page-content p-3" id="content">
+        <div id="cuadroContenido">
+            <button id="sidebarCollapse" type="button" class="btn bg-darken"><i
+                    class="fa fa-bars categoriasFuente tamañoIconos"></i><small
+                    class="text-uppercase font-weight-bold"></small></button>
+
+            <div class="row mt-4 d-none" id="alerta-verificacion">
+                <div class="col-12">
+                    <div class="animate__animated animate__fadeInDown alert yellowAlert alert-dismissible fade show"
+                        role="alert">
+                        <strong>Importante.</strong> Debes de verificar tu correo electrónico para poder cambiar ajustes
+                        de tu cuenta. <a id="btnSendEmailCode" class="alert-link" data-toggle="modal"
+                            data-target="#verificarCorreo">Haz clic aquí para poder verificarlo.</a><br>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-4">
+                <div class="col-12">
+                    <h1 class="tituloDashboard" id="mensajeDashboard"></h1>
+                </div>
+            </div>
+            <!-- Desde aqui comienza el contenido -->
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-md-4 col-sm-12 col-xs-12 margenTarjetas">
+                    <!-- Inicio de Tarjeta -->
+                    <div class="tarjetaDashboard animate__animated animate__fadeInDown">
+                        <!-- Boton de opciones -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="dropdown">
+                                    <button class="btn btnTarjetaDashboard1" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                            class="fas fa-ellipsis-v"></span></button>
+                                    <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="denuncias.html">Denuncias</a>
+                                        <a class="dropdown-item" href="#">Generar Reporte</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Icono -->
+                        <div class="row justify-content-center">
+                            <div class="col-12 d-flex justify-content-center align-items-center text-center">
+                                <i class="fas fa-exclamation-triangle icono1"></i>
+                            </div>
+                        </div>
+                        <!-- Labels -->
+                        <div class="row justify-content-center mt-4">
+                            <div
+                                class="col-12 d-flex flex-column justify-content-center align-items-center text-center">
+                                <h1 class="tituloTarjetaDashboard">Denuncias Realizadas</h1>
+                                <h1 class="contadorTarjetaDashboard mt-1" id="txtDenuncia">0</h1>
+                            </div>
+                        </div>
+                        <!-- Final de Tarjeta -->
+                    </div>
+                </div>
+
+                <!-- Inicio de Tarjeta (Se repite el mismo formato) -->
+                <div class="col-xl-4 col-md-4 col-sm-12 col-xs-12 margenTarjetas">
+                    <div class="tarjetaDashboard animate__animated animate__fadeInDown">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="dropdown">
+                                    <button class="btn btnTarjetaDashboard2" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                            class="fas fa-ellipsis-v"></span></button>
+                                    <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="visitas.html">Visitas</a>
+                                        <a class="dropdown-item" href="#">Generar Reporte</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-12 d-flex justify-content-center align-items-center text-center">
+                                <i class="fas fa-car-side icono2"></i>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <div
+                                class="col-12 d-flex flex-column justify-content-center align-items-center text-center">
+                                <h1 class="tituloTarjetaDashboard">Visitas<br>Vigentes</h1>
+                                <h1 class="contadorTarjetaDashboard mt-1" id="txtVisitas">0</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inicio de Tarjeta (Se repite el mismo formato) -->
+                <div class="col-xl-4 col-md-4 col-sm-12 col-xs-12 margenTarjetas">
+                    <div class="tarjetaDashboard animate__animated animate__fadeInDown">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="dropdown">
+                                    <button class="btn btnTarjetaDashboard3" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                            class="fas fa-ellipsis-v"></span></button>
+                                    <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Aportaciones</a>
+                                        <a class="dropdown-item" href="#">Generar Reporte</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-12 d-flex justify-content-center align-items-center text-center">
+                                <i class="fas fa-money-bill-wave icono3"></i>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <div
+                                class="col-12 d-flex flex-column justify-content-center align-items-center text-center">
+                                <h1 class="tituloTarjetaDashboard">Aportaciones Pendientes</h1>
+                                <h1 class="contadorTarjetaDashboard mt-1" id="txtAportaciones">0</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Actividad Reciente -->
+            <div class="row my-4">
+                <div class="col-12">
+                    <h1 class="tituloDashboard">Aportaciones del año</h1>
+                </div>
+            </div>
+            <!-- Desde aqui comienza la tabla -->
+            <div class="row justify-content-center table-responsive animate__animated animate__fadeInUp tablaResponsive"
+                id="">
+                <div class="col-12 justify-content-center align-items-center text-center">
+                    <table class="table table-borderless citigerTable" id="data-table2">
+                        <thead>
+                            <!-- Columnas-->
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Concepto</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Fecha Limite</th>
+                                <th scope="col">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-rows">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div><br>
+            <!-- Desde aqui termina la tabla -->
+            <!-- Desde aqui finaliza el contenido -->
+
+            <!-- Fin del Modal -->
+
+        </div>
+
+    </div>
+    <!-- Final del contenido -->
+
+    <!-- Modal para verificar el correo electrónico -->
+    <div class="modal fade" id="verificarCorreo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content justify-content-center px-3 py-2">
+                <!-- Cabecera del Modal -->
+                <div class="modal-header">
+                    <!-- Titulo -->
+                    <h5 class="modal-title tituloModal" id="exampleModalLabel"><span
+                            class="fas fa-info-circle mr-4 iconoModal"></span>Verificar Correo Electrónico</h5>
+                    <!-- Boton para Cerrar -->
+                    <button type="button" class="close closeModalButton lead" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Contenido del Modal -->
+                <div class="textoModal modal-body px-3 pb-4">
+                    <div class="row mb-4">
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                            <i class="fas fa-car-side icono5"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="tituloDato2">Ingrese el código de verificación enviado a su correo.</h1>
+                        </div>
+                    </div>
+                    <form id="verificarCodigo-form" autocomplete="off">
+                        <div class="row mt-2">
+                            <div class="col-12 d-flex justify-content-center">
+                                <div class="d-flex justify-content-center align-items-center mb-2">
+                                    <!-- Input Correo -->
+                                    <div class="form-group mb-4" style="width: 300px;">
+                                        <h1 class="tituloCajasLogin">Código de Verificación:</h1>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <input type="text" id="1a" name="1a"
+                                                onKeyup="autotab(this, document.getElementById('2a'),document.getElementById('1a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="text" id="2a" name="2a"
+                                                onKeyup="autotab(this, document.getElementById('3a'),document.getElementById('1a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="text" id="3a" name="3a"
+                                                onKeyup="autotab(this, document.getElementById('4a'),document.getElementById('2a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="text" id="4a" name="4a"
+                                                onKeyup="autotab(this, document.getElementById('5a'),document.getElementById('3a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="text" id="5a" name="5a"
+                                                onKeyup="autotab(this, document.getElementById('6a'),document.getElementById('4a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="text" id="6a" name="6a"
+                                                onKeyup="autotab(this, document.getElementById('6a'),document.getElementById('5a'))"
+                                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                Required maxlength="1" class="form-control cajaCodigo" Required>
+                                            <input type="number" class="d-none" id="codigoAuth" name="codigoAuth">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="submit" class="btn btnAgregarFormulario mr-2"><span
+                                        class="fas fa-check mr-3 tamañoIconosBotones"></span>Verificar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del Modal -->
+
+    <script src="../js/lightbox-plus-jquery.min.js"></script>
+    <script src="../js/jquery-3.5.1.slim.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../controllers/dashboard.js"></script>
+    <script src="../js/datatables.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../controllers/logout.js"></script>
+    <script src="../js/components.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js">
+    </script>
+</body>
+
+</html>
