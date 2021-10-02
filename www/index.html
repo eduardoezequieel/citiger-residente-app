@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <input type="text" id="txtModo" class="d-none" text="">
+    <input type="text" id="txtModo" class="d-none" value="light">
     <!-- Contenedor Principal -->
     <div id="containerr">
         <div id="contenedor">
@@ -498,6 +498,9 @@
     </div>
 
     <!-- JS -->
+    <script>
+        document.getElementById('txtModo').value = 'light'
+    </script>
     <script src="js/jquery-3.5.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -506,9 +509,7 @@
     <script src="js/chart.min.js"></script>
     <script src="js/components.js"></script>
     <script type="text/javascript" src="controllers/index.js"></script>
-    <script>
-        document.getElementById('txtModo').value = 'light'
-    </script>
+    
 </body>
 
 </html>

@@ -13,12 +13,39 @@
 const API_USUARIO2 = '../../app/api/dashboard/usuarios.php?action=';
 const API_RESIDENTES = '../../app/api/residente/index.php?action=';
 
+//Variables url
+var api_usuarioIndex;
+var idIndex;
+var aliasIndex;
+var fotoIndex;
+var tipoIndex;
+var modoIndex;
+var correoIndex;
+var ipIndex;
 
+//Al cargar la pagina
 document.addEventListener('DOMContentLoaded',function(){
     loadPage();
-})
+});
 
+//Se carga en el head
 function loadPage(){
+    let params = new URLSearchParams(location.search)
+    // Se obtienen los datos localizados por medio de las variables.
+    idIndex = params.get('id');
+    aliasIndex = params.get('alias');
+    fotoIndex = params.get('foto');
+    if (params.get('modo') == null) {
+        modoIndex = 'light';
+    } else {
+        modoIndex = params.get('modo');
+    }
+    correoIndex = params.get('correo');
+    ip = params.get('ip');
+    document.getElementById('txtModo').value = modoIndex;
+    //Se carga el sidebar/navbar
+    isLogged(idIndex, aliasIndex, fotoIndex, modoIndex, ip);
+    // Se obtienen los datos localizados por medio de las variables.
     var modo = document.getElementById('txtModo').value;
     if (modo == 'light') {
         //Modo claro
@@ -37,17 +64,6 @@ function loadPage(){
         document.documentElement.style.setProperty('--color-amarillo', 'rgb(255, 246, 186)');
         document.documentElement.style.setProperty('--color-amarillo-hover', 'rgb(112, 98, 2)');
         document.documentElement.style.setProperty('--color-citiger-claro', '#c5dcff');
-
-        //Se cambia la imagen del boton de inicio para que coincida con el modo
-        document.getElementById('imgDashboard').src = '../../resources/img/CitigerWhiteLogo2.png';
-        document.getElementById('imgDashboard2').src = '../../resources/img/CitigerWhiteLogo2.png';
-
-        //Se ocultan/muestran los botones indicados para cambiar de modo posteriormente
-        document.getElementById('lightMode').className = 'd-none';
-        document.getElementById('darkMode').className = 'btn fas fa-moon botonesPerfil';
-
-        document.getElementById('lightMode2').className = 'd-none';
-        document.getElementById('darkMode2').className = 'btn fas fa-moon botonesPerfil';
       
     } else if (modo == 'dark') {
         //Modo oscuro
@@ -67,19 +83,198 @@ function loadPage(){
         document.documentElement.style.setProperty('--color-amarillo-hover', 'rgb(255, 221, 0)');
         document.documentElement.style.setProperty('--color-citiger-claro', '#0b1d35');
 
-        //Se cambia la imagen del boton de inicio para que coincida con el modo
-        document.getElementById('imgDashboard').src = '../../resources/img/citigerDarkLogo2.png';
-        document.getElementById('imgDashboard2').src = '../../resources/img/citigerDarkLogo2.png';
-
-        document.getElementById('lightMode').className = 'btn fas fa-sun botonesPerfil';
-        document.getElementById('darkMode').className = 'd-none';
-
-        document.getElementById('lightMode2').className = 'btn fas fa-sun botonesPerfil';
-        document.getElementById('darkMode2').className = 'd-none';
     } else {
         console.log('error');
     }
 };
+
+//Función para cargar el encabezado
+function isLogged(id,alias,foto,modo,ip) {
+    console.log(modo);
+    //Declarando apis cuando hay un usuario loggueado o no
+    var api_nav;
+    if (id > 0) {
+        api_nav = `http://34.125.57.125/app/api/residente/index.php?id=${id}&action=validateSession`;
+    } else {
+        api_nav = `http://34.125.57.125/app/api/residente/index.php?action=validateSession`;
+    }
+    //Obteniendo si hay una sesión logueada
+    fetch(api_nav).then(request=>{
+        //Verificando que la respuesta sea satisfactoria
+        if (request.ok) {
+            request.json().then(response=>{
+                //Evaluando la respuesta de la api si es true imprime el navbar y si no redirecciona al index
+                if (response.status) {
+                    let content = '';
+                    content += `
+                        <!-- Inicio del Sidebar -->
+                        <div class="vertical-nav colorCitiger" id="sidebar">
+                            <div class="py-3 px-3 colorCitiger">
+                                <div class="media d-flex">
+                                    <a href="dashboard.html" class="btn btnInicio"><img id="imgDashboard"
+                                            src="../img/citigerDarkLogo2.png" alt="" class="img-fluid" width="140px"></a>
+                                </div>
+                            </div>
+
+                            <!-- Perfil -->
+                            <div id="tarjeta">
+                                <div id="tarjetaPerfil" class="p-3">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/${foto}"
+                                                id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
+                                        <div class="col-9">
+                                            <label for="ajustes" class="pl-4 pt-2" id="usuario">${alias}</label>
+                                            <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12" id="filaBotones">
+                                            <div id="botones">
+                                                <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil" id="ajustes"></a>
+                                                <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
+                                                    id="cerrar"></a>
+                                                <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode" onclick="lightMode2()"></a>
+                                                <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode" onclick="darkMode2()"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones de Navegación -->
+                            <ul class="nav flex-column colorCitiger mt-4">
+                                <li class="nav-item">
+                                    <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                        <i class="fas fa-home mr-3 tamañoIconos"></i>
+                                        Alquileres
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="denuncias.html" class="nav-link categoriasFuente">
+                                        <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
+                                        Denuncias
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="visitas.html" class="nav-link categoriasFuente">
+                                        <i class="fas fa-car mr-3 tamañoIconos"></i>
+                                        Visitas
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Fin del sidebar -->
+
+                        <!-- Inicio del navbar para dispositivos moviles -->
+                        <nav id="navbar" class="d-none navbar sticky-top navbar-expand-lg">
+                            <a class="navbar-brand" href="dashboard.html">
+                                <img src="../img/citigerWhiteLogo2.png" alt="#" id="imgDashboard2" class="img-fluid"
+                                    width="120px"></a>
+                            </a>
+                            <button class="btn bg-darken2 mt-2 float-right" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span class="fas fa-caret-down"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center align-items-center">
+                                        <!-- Perfil -->
+                                        <div id="tarjeta">
+                                            <div id="tarjetaPerfil" class="p-3">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <img src="http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/${foto}"
+                                                        id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
+                                                    <div class="col-9">
+                                                        <label for="ajustes" class="pl-4 pt-2" id="usuario">${alias}</label>
+                                                        <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12" id="filaBotones">
+                                                        <div id="botones">
+                                                            <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil"
+                                                                id="ajustes"></a>
+                                                            <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
+                                                                id="cerrar"></a>
+                                                            <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode2"
+                                                                onclick="lightMode2()"></a>
+                                                            <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode2"
+                                                                onclick="darkMode2()"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="navbar-nav mr-auto d-flex justify-content-center align-items-center colorCitiger mt-4 bg-dark">
+                                    <div>
+                                        <li class="nav-item">
+                                            <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                                <i class="fas fa-home mr-3 tamañoIconos"></i>
+                                                Alquileres
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="denuncias.html" class="nav-link categoriasFuente">
+                                                <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
+                                                Denuncias
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="visitas.html" class="nav-link categoriasFuente">
+                                                <i class="fas fa-car mr-3 tamañoIconos"></i>
+                                                Visitas
+                                            </a>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </nav>
+
+                    `;
+                    // Se agregan las filas al cuerpo de la tabla mediante su id para mostrar los registros.
+                    document.getElementById('nav').innerHTML = content;
+                    //Seteando imagenes y ocutando botones según modo
+                    if (modo == 'light') {
+                         //Se cambia la imagen del boton de inicio para que coincida con el modo
+                        document.getElementById('imgDashboard').src = '../img/CitigerWhiteLogo2.png';
+                        document.getElementById('imgDashboard2').src = '../img/CitigerWhiteLogo2.png';
+                        //Se ocultan/muestran los botones indicados para cambiar de modo posteriormente del sidebar
+                        document.getElementById('lightMode').className = 'd-none';
+                        document.getElementById('darkMode').className = 'btn fas fa-moon botonesPerfil';
+
+                        //Se ocultan/muestran los botones indicados para cambiar de modo posteriormente del sidebar
+                        document.getElementById('lightMode2').className = 'd-none';
+                        document.getElementById('darkMode2').className = 'btn fas fa-moon botonesPerfil';
+
+                    } else if (modo == 'dark') {
+                         //Se cambia la imagen del boton de inicio para que coincida con el modo
+                        document.getElementById('imgDashboard').src = '../img/citigerDarkLogo2.png';
+                        document.getElementById('imgDashboard2').src = '../img/citigerDarkLogo2.png';
+                        //Se ocultan/muestran los botones indicados para cambiar de modo posteriormente del sidebar
+                        document.getElementById('lightMode').className = 'btn fas fa-sun botonesPerfil';
+                        document.getElementById('darkMode').className = 'd-none';
+
+                        //Se ocultan/muestran los botones indicados para cambiar de modo posteriormente del navbar
+                        document.getElementById('lightMode2').className = 'btn fas fa-sun botonesPerfil';
+                        document.getElementById('darkMode2').className = 'd-none';
+                    }
+
+                    document.getElementById('mensajeDashboard').textContent = `¡Bienvenido ${alias}!`
+                } else if (response.error) {
+                    //window.location.href = '../index.html';
+                }
+            })
+        }
+    }).catch(function (error){
+        sweetAlert(2, error, null);
+    });
+}
 
 function lightMode(){
     //Modo claro
@@ -389,8 +584,8 @@ function readRows2(api) {
 }
 
 
-function readRows(api) {
-    fetch(api + 'readAll', {
+function readRows(api, id) {
+    fetch(api + `readAll&id=${id}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.

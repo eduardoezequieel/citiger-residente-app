@@ -1,31 +1,33 @@
 //Constante para la ruta API
-const API_USUARIO = '../../app/api/residente/index.php?action=';
+const API_USUARIO = 'http://34.125.57.125/app/api/residente/index.php?action=';
 
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
+    let params = new URLSearchParams(location.search)
+    // Se obtienen los datos localizados por medio de las variables.
+    idIndex = params.get('id');
+    aliasIndex = params.get('alias');
+    fotoIndex = params.get('foto');
+    tipoIndex = params.get('tipo');
+    modoIndex = params.get('modo');
+    correoIndex = params.get('correo');
+    ipIndex = params.get('ip');
+    if (idIndex > 0){
+        // Constante para establecer la ruta y parámetros de comunicación con la API.
+        api_usuarioIndex = `http://34.125.57.125/app/api/caseta/usuarios.php?id=${id}&action=`;
+        
+    } else {
+        // Constante para establecer la ruta y parámetros de comunicación con la API.
+        api_usuarioIndex  = `http://34.125.57.125/app/api/caseta/usuarios.php?action=`;
+        
+    }
     //Método para activar usuario después de 24 horas
     checkBlockUsers();
-    //Verificando si hay una sesión iniciada
-    fetch(API_USUARIO + 'validateSession')
-        .then(request => {
-            //Se verifica si la petición fue correcta
-            if (request.ok) {
-                request.json().then(response => {
-                    //Se verifica si la respuesta no es correcta para redireccionar al primer uso
-                    if (response.status) {
-                        window.location.href = 'dashboard.php';
-                    } else {
-                    }
-                })
-            } else {
-                console.log(request.status + ' ' + request.statusText);
-            }
-        }).catch(error => console.log(error));
         
-        getOS();
-        
-        document.getElementById('txtLoc').value='No disponible';
-        document.getElementById('txtIP').value='No disponible';
+    getOS();
+    
+    document.getElementById('txtLoc').value='No disponible';
+    document.getElementById('txtIP').value='No disponible';
 });
 
 //Método para iniciar sesion
@@ -44,10 +46,19 @@ document.getElementById('login-form').addEventListener('submit', function (event
                 //Verificando si la respuesta es satisfactoria de lo contrario se muestra la excepción
                 if (response.status) {
                     if (response.auth) {
-                        sendVerificationCodeAuth();
-                        openModal('verificarCodigoAuth')
+                        id_tmp = 0;
+                        id_tmp = response.idresidente_temp;
+                        sendVerificationCodeAuth(response.correo_residente, response.alias_caseta);
+                        openModal('verificarCodigoAuth');
                     } else {
-                        sweetAlert(1, response.message, 'dashboard.php');
+                        idIndex = response.idresidente;
+                        aliasIndex = response.username;
+                        fotoIndex = response.foto_residente;
+                        modoIndex = response.modo_residente;
+                        correoIndex = response.correo_residente;
+                        ipIndex = response.ip_residente;
+                    
+                        sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${response.ip_residente}`);
                     }
                 } else {
                     if (response.error) {
@@ -65,8 +76,8 @@ document.getElementById('login-form').addEventListener('submit', function (event
 });
 
 //Enviar código de verificación
-function sendVerificationCodeAuth(){
-    fetch(API_USUARIO + 'sendVerificationCode')
+function sendVerificationCodeAuth(correo, alias){
+    fetch(API_USUARIO + `sendVerificationCode&correo${correo}&alias=${alias}`)
         .then(request => {
             //Se verifica si la petición fue correcta
             if (request.ok) {

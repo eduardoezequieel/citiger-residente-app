@@ -1,19 +1,25 @@
 //Constante para la direccion de la API
-const API_DASHBOARD = '../../app/api/residente/dashboard.php?action=';
-const API_USUARIOS = '../../app/api/residente/index.php?action=';
+const API_DASHBOARD = 'http://34.125.57.125/app/api/residente/dashboard.php?action=';
+const API_USUARIOS = 'http://34.125.57.125/app/api/residente/index.php?action=';
+//se capturan los datos de la url
+var params = new URLSearchParams(location.search);
 
 //Se ejecutan al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
-    contadorDenuncias();
-    contadorVisitas();
-    contadorAportacion();
-    readRows(API_DASHBOARD);
-    createSesionHistory();
-    checkIfEmailIsValidated();
+    
+    var id = params.get('id');
+    var ip = params.get('ip');
+    var correo = params.get('correo');
+    contadorDenuncias(id);
+    contadorVisitas(id);
+    contadorAportacion(id);
+    readRows(API_DASHBOARD, id);
+    createSesionHistory(id, ip);
+    checkIfEmailIsValidated(id);
 });
 
-function checkIfEmailIsValidated() {
-    fetch(API_USUARIOS + 'checkIfEmailIsValidated', {
+function checkIfEmailIsValidated(id) {
+    fetch(API_USUARIOS + `checkIfEmailIsValidated&id=${id}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -30,7 +36,7 @@ function checkIfEmailIsValidated() {
                         document.getElementById('alerta-verificacion').remove();
                     }
                 } else {
-                    sweetAlert(4, response.exception, null);
+                    sweetAlert(2, response.exception, null);
                 }
             });
         } else {
@@ -51,9 +57,14 @@ function autotab(current, to, prev) {
     }
 }
 
+//Funcion que se ejecuta al hacer click en un boton
+document.getElementById('btnSendEmailCode').addEventListener('click',function(){
+    sendEmailCode(params.get('id'), params.get('correo'));
+})
+
 //Funcion para enviar un correo electronico con el codigo de verificacion
-function sendEmailCode(){
-    fetch(API_USUARIOS + 'sendEmailCode', {
+function sendEmailCode(id, correo){
+    fetch(API_USUARIOS + `sendEmailCode&id=${id}&correo=${correo}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -84,9 +95,10 @@ document.getElementById('verificarCodigo-form').addEventListener('submit', funct
     var cinco = document.getElementById('5a').value;
     var seis = document.getElementById('6a').value;
     document.getElementById('codigoAuth').value = uno + dos + tres + cuatro + cinco + seis;
-
+    let params = new URLSearchParams(location.search);
+    var id = params.get('id');
     event.preventDefault();
-    fetch(API_USUARIOS + 'verifyCodeEmail', {
+    fetch(API_USUARIOS + `verifyCodeEmail&id=${params.get('id')}`, {
         method: 'post',
         body: new FormData(document.getElementById('verificarCodigo-form'))
     }).then(function (request) {
@@ -97,7 +109,7 @@ document.getElementById('verificarCodigo-form').addEventListener('submit', funct
                 if (response.status) {
                     // Mostramos mensaje de exito
                     closeModal('verificarCorreo');
-                    sweetAlert(1, response.message, 'dashboard.php');
+                    sweetAlert(1, response.message, `dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }
@@ -110,8 +122,8 @@ document.getElementById('verificarCodigo-form').addEventListener('submit', funct
     });
 });
 
-function contadorDenuncias() {
-    fetch(API_DASHBOARD + 'contadorDenuncias', {
+function contadorDenuncias(id) {
+    fetch(API_DASHBOARD + `contadorDenuncias&id=${id}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -133,8 +145,8 @@ function contadorDenuncias() {
     });
 }
 
-function contadorVisitas() {
-    fetch(API_DASHBOARD + 'contadorVisitas', {
+function contadorVisitas(id) {
+    fetch(API_DASHBOARD + `contadorVisitas&id=${id}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -157,8 +169,8 @@ function contadorVisitas() {
 }
 
 
-function contadorAportacion() {
-    fetch(API_DASHBOARD + 'contadorAportacion', {
+function contadorAportacion(id) {
+    fetch(API_DASHBOARD + `contadorAportacion&id=${id}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -237,8 +249,8 @@ function fillTable(dataset) {
     });
 }
 
-function createSesionHistory(){
-    fetch(API_USUARIOS + 'createSesionHistory', {
+function createSesionHistory(id, ip){
+    fetch(API_USUARIOS + `createSesionHistory&id=${id}&ip=${ip}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
