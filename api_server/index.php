@@ -199,9 +199,13 @@ if (isset($_GET['action'])) {
                             if ($usuarios->checkPassword($_POST['txtPassword'])) {
                                 if ($usuarios->changeEmail()) {
                                     if ($usuarios->emailNotValidated()) {
-                                        $_SESSION['correo_residente'] = $usuarios->getCorreo();
-                                        $result['status'] = 1;
-                                        $result['message'] = 'Correo actualizado correctamente. Por favor asegurate de verificarlo.';
+                                        if ($usuarios->updateAuthMode('No')) {
+                                            $_SESSION['correo_residente'] = $usuarios->getCorreo();
+                                            $result['status'] = 1;
+                                            $result['message'] = 'Correo actualizado correctamente. Por favor asegurate de verificarlo.';
+                                        } else {
+                                            $result['exception'] = Database::getException();
+                                        }
                                     } else {
                                         $result['exception'] = Database::getException();
                                     }
@@ -385,14 +389,30 @@ if (isset($_GET['action'])) {
                                 if ($usuarios->setContrasenia($_POST['txtNuevaContrasena'])) {
                                     if ($verificacion = $usuarios->checkIfEmailIsValidated()) {
                                         if ($verificacion['verificado'] == '1') {
-                                            if ($usuarios->changePassword()) {
-                                                $result['status'] = 1;
-                                                $result['message'] = 'Contraseña actualizada correctamente.';
-                                                $data = $usuarios->getIdBitacora('Cambio de clave');
-                                                $usuarios->setIdBitacora($data['idbitacora']);
-                                                $usuarios->updateBitacoraOut('Cambio de clave');
+                                            if ($idbitacora = $usuarios->getBitacoraId('Cambio de clave')) {
+                                                if ($usuarios->setIdBitacora($idbitacora['idbitacora'])) {
+                                                    if ($usuarios->updateBitacoraOut('Cambio de clave')) {
+                                                        if ($usuarios->changePassword()) {
+                                                            $result['status'] = 1;
+                                                            $result['message'] = 'Contraseña actualizada correctamente.';
+                                                            $data = $usuarios->getIdBitacora('Cambio de clave');
+                                                            $usuarios->setIdBitacora($data['idbitacora']);
+                                                            $usuarios->updateBitacoraOut('Cambio de clave');
+                                                        } else {
+                                                            $result['exception'] = Database::getException();
+                                                        }
+                                                    } else {
+                                                        $result['exception'] = Database::getException();
+                                                    }
+                                                } else {
+                                                    $result['exception'] = 'Id incorrecto.';
+                                                }
                                             } else {
-                                                $result['exception'] = Database::getException();
+                                               if (Database::getException) {
+                                                   $result['exception'] = Database::getException();
+                                               } else {
+                                                   $result['exception'] = 'No hay ningun registro en la bitacora con este id.';
+                                               }   
                                             }
                                         } else {
                                             $result['exception'] = 'Usted no ha verificado su correo electrónico, hacker :)';
@@ -502,11 +522,20 @@ if (isset($_GET['action'])) {
                                  //Se reinicia el conteo de intentos fallidos
                                  if ($usuarios->increaseIntentos(0)) {
                                     if ($result['dataset'] = $usuarios->checkLastPasswordUpdate()) {
-                                        $result['error'] = 1;
-                                        $result['message'] = 'Se ha detectado que debes actualizar
-                                                                tu contraseña por seguridad.';
-                                        $result['idresidente_tmp'] = $_SESSION['idresidente'];
-                                        unset($_SESSION['idresidente']);
+                                        if ($idbitacora = $usuarios->getBitacoraId('Cambio de clave')) {
+                                            $result['idbitacora'] = $idbitacora['idbitacora'];
+                                            $result['error'] = 1;
+                                            $result['message'] = 'Se ha detectado que debes actualizar
+                                                                    tu contraseña por seguridad.';
+                                            $result['idresidente_tmp'] = $_SESSION['idresidente'];
+                                            unset($_SESSION['idresidente']);
+                                        } else {
+                                            if (Database::getException()) {
+                                                $result['exception'] = Database::getException();
+                                            } else {
+                                                $result['exception'] = 'Este id no posee ningun registro de bitacora asociado.';
+                                            }
+                                        }
                                     } else {
                                         if ($autenticacion = $usuarios->getAuthMode()) {
                                             if ($autenticacion['autenticacion'] == 'Si') {
@@ -647,7 +676,7 @@ if (isset($_GET['action'])) {
             //Caso para cambiar la contraseña
             case 'changePassword':
                 $_POST = $usuarios->validateForm($_POST);
-                if ($usuarios->setIdResidente($_SESSION['idresidente_tmp'])) {
+                if ($usuarios->setIdResidente($_GET['idtemp'])) {
                     if ($usuarios->checkPassword($_POST['txtContrasenaActual1'])) {
                         if ($_POST['txtNuevaContrasena1'] == $_POST['txtConfirmarContrasena1']) {
                             if ($_POST['txtNuevaContrasena1'] != $_POST['txtContrasenaActual1'] ||
@@ -764,11 +793,27 @@ if (isset($_GET['action'])) {
                     if ($usuarios->setContrasenia($_POST['txtContrasenia2'])) {
                         // Ejecutamos la funcion para actualizar al usuario
                         if ($usuarios->changePasswordOut()) {
-                            $result['status'] = 1;
-                            $result['message'] = 'Clave actualizada correctamente';
-                            $correo->cleanCodeResidente($_GET['id']);
-                            unset($_SESSION['idresidenterecu']);
-                            unset($_SESSION['mail']);
+                            if ($idbitacora = $usuarios->getBitacoraId('Cambio de clave')) {
+                                if ($usuarios->setIdBitacora($idbitacora['idbitacora'])) {
+                                    if ($usuarios->updateBitacoraOut('Cambio de clave')) {
+                                        $result['status'] = 1;
+                                        $result['message'] = 'Clave actualizada correctamente';
+                                        $correo->cleanCodeResidente($_GET['id']);
+                                        unset($_SESSION['idresidenterecu']);
+                                        unset($_SESSION['mail']);
+                                    } else {
+                                        $result['exception'] = Database::getException();
+                                    }
+                                } else {
+                                    $result['exception'] = 'Id incorrecto.';
+                                }
+                            } else {
+                                if (Database::getException()) {
+                                    $result['exception'] = Database::getException();
+                                } else {
+                                    $result['exception'] = 'No hay ninguna bitacora con este id.';
+                                }
+                            }
                         } else {
                             $result['exception'] = Database::getException();
                         }

@@ -68,7 +68,15 @@ document.getElementById('login-form').addEventListener('submit', function (event
                     }
                 } else {
                     if (response.error) {
-                        document.getElementById('txtBitacoraPassword').value = response.dataset.idbitacora;
+                        id_tmp = 0;
+                        id_tmp = response.idresidente_tmp;
+                        document.getElementById('id').value = response.idresidente_tmp;
+                        document.getElementById('alias').value = response.username;
+                        document.getElementById('foto').value = response.foto_residente;
+                        document.getElementById('modo').value = response.modo_residente;
+                        document.getElementById('correo').value = response.correo_residente;
+                        document.getElementById('ip').value = response.ip_residente;
+                        document.getElementById('txtBitacoraPassword').value = response.idbitacora;
                         openModal('obligatorioContrasena');
                     } else {
                         sweetAlert(2, response.exception, null);
@@ -179,7 +187,7 @@ function checkBlockUsers() {
 document.getElementById('90password-form').addEventListener('submit', function (event) {
     event.preventDefault();
     //Verificando las credenciales del usuario
-    fetch(API_USUARIO + 'changePassword', {
+    fetch(API_USUARIO + `changePassword&idtemp=${document.getElementById('id').value}`, {
         method: 'post',
         body: new FormData(document.getElementById('90password-form'))
     }).then(request => {
@@ -188,7 +196,7 @@ document.getElementById('90password-form').addEventListener('submit', function (
             request.json().then(response => {
                 //Verificando si la respuesta es satisfactoria de lo contrario se muestra la excepción
                 if (response.status) {
-                    sweetAlert(1, response.message, 'dashboard.php');
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('ip').value}`);
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
