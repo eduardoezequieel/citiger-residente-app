@@ -565,9 +565,9 @@ if (isset($_GET['action'])) {
             case 'sendVerificationCode':
                 // Generamos el codigo de seguridad 
                 $code = rand(999999, 111111);
-                if ($correo->setCorreo($_SESSION['correo_residente'])) {
+                if ($correo->setCorreo($_GET['correo'])) {
                     // Ejecutamos funcion para obtener el usuario del correo ingresado\
-                    $correo->obtenerResidente($_SESSION['correo_residente']);
+                    $correo->obtenerResidente($_GET['correo']);
                     try {
 
                         //Ajustes del servidor
@@ -602,7 +602,7 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'Correo incorrecto.';
                 }
-
+                session_destroy();
                 break;
             //Caso para verificar el código con el factor de autenticación en dos pasos.
             case 'verifyCodeAuth':
@@ -610,11 +610,9 @@ if (isset($_GET['action'])) {
                 // Validmos el formato del mensaje que se enviara en el correo
                 if ($correo->setCodigo($_POST['codigoAuth'])) {
                     // Ejecutamos la funcion para validar el codigo de seguridad
-                    if ($correo->validarCodigoResidente('residente',$_SESSION['idresidente_temp'])) {
-                        $_SESSION['idresidente'] = $_SESSION['idresidente_temp'];
-                        unset($_SESSION['idresidente_temp']);
+                    if ($correo->validarCodigoResidente('residente',$_GET['id_tmp'])) {
                         $result['status'] = 1;
-                        $correo->cleanCode($_SESSION['idresidente']);
+                        $correo->cleanCode($_GET['id_tmp']);
                         // Colocamos el mensaje de exito 
                         $result['message'] = 'Sesión iniciada correctamente.';
                     } else {
@@ -722,6 +720,7 @@ if (isset($_GET['action'])) {
                                 $mail->Body    = 'Hola ' . $_SESSION['residente'] . ', hemos enviado este correo para que recuperes tu contraseña, tu código de seguridad es: <b>' . $code . '</b>';
     
                                 if ($mail->send()) {
+                                    $result['dataset'] = $usuarios->getIdWithMail($_SESSION['mail']);
                                     $result['status'] = 1;
                                     $result['message'] = 'Código enviado correctamente, ' . $_SESSION['residente'] . ' ';
                                     $correo->actualizarCodigo('residente', $code);
@@ -737,9 +736,7 @@ if (isset($_GET['action'])) {
     
                         $result['exception'] = 'Correo incorrecto';
                     }
-    
-    
-    
+                    session_destroy();
                     break;
     
                 case 'verifyCode':
@@ -747,7 +744,7 @@ if (isset($_GET['action'])) {
                     // Validmos el formato del mensaje que se enviara en el correo
                     if ($correo->setCodigo($_POST['codigo'])) {
                         // Ejecutamos la funcion para validar el codigo de seguridad
-                        if ($correo->validarCodigoResidente('residente',$_SESSION['idresidenterecu'])) {
+                        if ($correo->validarCodigoResidente('residente',$_GET['idrecu'])) {
                             $result['status'] = 1;
                             // Colocamos el mensaje de exito 
                             $result['message'] = 'El código ingresado es correcto';
@@ -763,13 +760,13 @@ if (isset($_GET['action'])) {
             case 'changePass':
                 // Obtenemos el form con los inputs para obtener los datos
                 $_POST = $usuarios->validateForm($_POST);
-                if ($usuarios->setIdResidente($_SESSION['idresidenterecu'])) {
+                if ($usuarios->setIdResidente($_GET['idrecu'])) {
                     if ($usuarios->setContrasenia($_POST['txtContrasenia2'])) {
                         // Ejecutamos la funcion para actualizar al usuario
                         if ($usuarios->changePasswordOut()) {
                             $result['status'] = 1;
                             $result['message'] = 'Clave actualizada correctamente';
-                            $correo->cleanCodeResidente($_SESSION['idresidenterecu']);
+                            $correo->cleanCodeResidente($_GET['id']);
                             unset($_SESSION['idresidenterecu']);
                             unset($_SESSION['mail']);
                         } else {
@@ -781,6 +778,7 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'Correo incorrecto';
                 }
+                session_destroy();
                 break;
             //Redirige al dashboard
             case 'validateSession':

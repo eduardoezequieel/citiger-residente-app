@@ -48,6 +48,12 @@ document.getElementById('login-form').addEventListener('submit', function (event
                     if (response.auth) {
                         id_tmp = 0;
                         id_tmp = response.idresidente_temp;
+                        document.getElementById('id').value = response.idresidente_temp;
+                        document.getElementById('alias').value = response.username;
+                        document.getElementById('foto').value = response.foto_residente;
+                        document.getElementById('modo').value = response.modo_residente;
+                        document.getElementById('correo').value = response.correo_residente;
+                        document.getElementById('ip').value = response.ip_residente;
                         sendVerificationCodeAuth(response.correo_residente, response.alias_caseta);
                         openModal('verificarCodigoAuth');
                     } else {
@@ -77,7 +83,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
 
 //Enviar código de verificación
 function sendVerificationCodeAuth(correo, alias){
-    fetch(API_USUARIO + `sendVerificationCode&correo${correo}&alias=${alias}`)
+    fetch(API_USUARIO + `sendVerificationCode&correo=${correo}&alias=${alias}`)
         .then(request => {
             //Se verifica si la petición fue correcta
             if (request.ok) {
@@ -109,7 +115,7 @@ document.getElementById('checkCodeAuth-form').addEventListener('submit', functio
     console.log(document.getElementById('codigoAuth').value);
 
     event.preventDefault();
-    fetch(API_USUARIO + 'verifyCodeAuth', {
+    fetch(API_USUARIO + `verifyCodeAuth&id_tmp=${document.getElementById('id').value}`, {
         method: 'post',
         body: new FormData(document.getElementById('checkCodeAuth-form'))
     }).then(function (request) {
@@ -120,7 +126,7 @@ document.getElementById('checkCodeAuth-form').addEventListener('submit', functio
                 if (response.status) {
                     // Mostramos mensaje de exito
                     closeModal('verificarCodigoAuth');
-                    sweetAlert(1, response.message, 'dashboard.php');
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('ip').value}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }
@@ -230,14 +236,13 @@ document.getElementById('checkMail-form').addEventListener('submit', function (e
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     // Mostramos mensaje de exito
-
+                    document.getElementById('id').value = response.dataset.idresidente;
+                    console.log(document.getElementById('id').value);
                     closeModal('recuperarContraseña');
                     openModal('verificarCodigoRecuperacion');
                     const boton = document.getElementById('btnVerificar');
                     boton.disabled = false;
                     document.getElementById('txtCorreoRecu').disabled = false;
-
-
 
                 } else {
                     sweetAlert(4, response.exception, null);
@@ -267,7 +272,7 @@ document.getElementById('checkCode-form').addEventListener('submit', function (e
     document.getElementById('codigo').value = uno + dos + tres + cuatro + cinco + seis;
 
     event.preventDefault();
-    fetch(API_USUARIO + 'verifyCode', {
+    fetch(API_USUARIO + `verifyCode&idrecu=${document.getElementById('id').value}`, {
         method: 'post',
         body: new FormData(document.getElementById('checkCode-form'))
     }).then(function (request) {
@@ -280,8 +285,6 @@ document.getElementById('checkCode-form').addEventListener('submit', function (e
 
                     closeModal('verificarCodigoRecuperacion');
                     openModal('cambiarContraseña');
-
-
 
                 } else {
                     sweetAlert(4, response.exception, null);
@@ -326,7 +329,7 @@ document.getElementById('update-form').addEventListener('submit', function (even
                 sweetAlert(3, 'Las claves ingresadas deben ser iguales', null);
             } else {
                 // Realizamos peticion a la API de clientes con el caso changePass y method post para dar acceso al valor de los campos del form
-                fetch(API_USUARIO + 'changePass', {
+                fetch(API_USUARIO + `changePass&idrecu=${document.getElementById('id').value}`, {
                     method: 'post',
                     body: new FormData(document.getElementById('update-form'))
                 }).then(function (request) {
