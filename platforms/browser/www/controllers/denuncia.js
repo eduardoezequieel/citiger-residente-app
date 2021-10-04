@@ -1,14 +1,15 @@
-const API_DENUNCIA = '../../app/api/residente/denuncia.php?action=';
-const ENDPOINT_ESTADO = '../../app/api/residente/denuncia.php?action=readComplaintStatus';
-const ENDPOINT_TIPO = '../../app/api/residente/denuncia.php?action=readComplaintType';
-
+//se capturan los datos de la url
+var params = new URLSearchParams(location.search);
+const API_DENUNCIA = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=`;
+const ENDPOINT_ESTADO = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintStatus`;
+const ENDPOINT_TIPO = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintType`;
+//Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
-
     fillSelect(ENDPOINT_ESTADO, 'cbEstadoDenuncia', null);
     fillSelect(ENDPOINT_TIPO, 'cbTipo', null);
     readRows(API_DENUNCIA);
+});
 
-})
 
 function fillTable(dataset) {
     let content = '';
@@ -20,7 +21,7 @@ function fillTable(dataset) {
                 <th scope="row">
                     <div class="row paddingTh">
                         <div class="col-12">
-                            <img src="../../resources/img/usericon.png" alt="#"
+                            <img src="http://34.125.57.125/resources/img/userIcon.png" alt="#"
                                 class="rounded-circle fit-images" width="30px" height="30px">
                         </div>
                     </div>
@@ -129,9 +130,8 @@ function fillTable(dataset) {
 }
 
 document.getElementById('btnReiniciar').addEventListener('click', function () {
-    readRows(API_DENUNCIA);
+    readRows(API_DENUNCIA)
     fillSelect(ENDPOINT_ESTADO, 'cbEstadoDenuncia', null);
-
 });
 
 //ocultar los demas botones de acción en el formulario al presionar Agregar.
@@ -148,11 +148,6 @@ document.getElementById('btnInsertDialog').addEventListener('click', function ()
     // Se reinician los campos del formulario
     document.getElementById('idDenuncia').value = '';
     document.getElementById('txtDescripcion').value = '';
-
-
-
-
-
 
 });
 

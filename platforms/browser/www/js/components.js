@@ -153,7 +153,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="denuncias.html" class="nav-link categoriasFuente">
+                                    <a href="denuncias.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
                                         Denuncias
                                     </a>
@@ -222,7 +222,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="denuncias.html" class="nav-link categoriasFuente">
+                                            <a href="denuncias.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
                                                 Denuncias
                                             </a>
@@ -586,8 +586,8 @@ function readRows2(api) {
 }
 
 
-function readRows(api, id) {
-    fetch(api + `readAll&id=${id}`, {
+function readRows(api) {
+    fetch(api + 'readAll', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.

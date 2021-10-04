@@ -12,7 +12,8 @@ if (isset($_GET['action'])) {
     //Array para respuesta de la API
     $result = array('status' => 0, 'error' => 0, 'message' => null, 'exception' => null);
     //Verificando si hay una sesion iniciada
-    if (isset($_SESSION['idresidente'])) {
+    if (isset($_GET['id'])) {
+        $_SESSION['idresidente'] = $_GET['id'];
         //Se compara la acción a realizar cuando la sesion está iniciada
         switch ($_GET['action']) {
                 //Caso para leer todos los registros de la tabla
@@ -82,7 +83,7 @@ if (isset($_GET['action'])) {
                 break;
 
             case 'readAll':
-                if ($result['dataset'] = $denuncia->readAll()) {
+                if ($result['dataset'] = $denuncia->readAllResidente()) {
                     $result['status'] = 1;
                     $result['message'] = 'Se ha encontrado al menos una denuncia.';
                 } else {
@@ -115,7 +116,6 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'Residente invalido.';
                 }
-
                 break;
 
             case 'updateRow':
@@ -148,12 +148,10 @@ if (isset($_GET['action'])) {
                 }
                 break;
 
-
-
             case 'readAllByState':
                 $_POST = $denuncia->validateForm($_POST);
                 if ($denuncia->setIdEstadoDenuncia($_POST['idEstadoDenuncia'])) {
-                    if ($result['dataset'] = $denuncia->readAllByState()) {
+                    if ($result['dataset'] = $denuncia->readAllByStateResidente()) {
                         $result['status'] = 1;
                         $result['message'] = 'Se ha encontrado al menos una denuncia.';
                     } else {
@@ -172,6 +170,7 @@ if (isset($_GET['action'])) {
             default:
                 $result['exception'] = 'La acción no está disponible dentro de la sesión';
         }
+        session_destroy();
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('content-type: application/json; charset=utf-8');
         // Se imprime el resultado en formato JSON y se retorna al controlador.
