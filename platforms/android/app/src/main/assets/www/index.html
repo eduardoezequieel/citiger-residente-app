@@ -44,9 +44,9 @@
                 <div class="d-flex justify-content-center align-items-center col-xl-6 col-md-12 col-sm-12 col-xs-12">
                     <form method="post" id="login-form" autocomplete="off">
                         <input type="number" name="txtId" id="txtId" class="d-none">
-                        <input type="text" name="txtIP" id="txtIP" class="d-none">
-                        <input type="text" name="txtLoc" id="txtLoc" class="d-none">
-                        <input type="text" name="txtOS" id="txtOS" class="d-none">
+                        <input type="text" name="txtIP" id="txtIP" class="">
+                        <input type="text" name="txtLoc" id="txtLoc" class="">
+                        <input type="text" name="txtOS" id="txtOS" class="">
                         <input type="number" name="txtBitacora" id="txtBitacora" class="d-none">
                         <div class="row my-2">
                             <div class="col-12">
@@ -222,6 +222,12 @@
                         <div
                             class="col-xl-6 col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center align-items-center flex-column">
                             <form autocomplete="off" action="/form" method="post" id="checkCodeAuth-form">
+                                <input type="hidden" id="id">
+                                <input type="hidden" id="alias">
+                                <input type="hidden" id="foto">
+                                <input type="hidden" id="modo">
+                                <input type="hidden" id="correo">
+                                <input type="hidden" id="ip">
                                 <div class="d-flex justify-content-center align-items-center mb-2">
                                     <div class="alert w-75 yellowAlert alert-dismissible fade show" role="alert">
                                         <strong>Factor de Autenticación en dos pasos.</strong> Ingresa el código de
@@ -342,7 +348,7 @@
     <!-- Modal para verificar el codigo de verificación en la recuperación de contraseña -->
     <div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" id="verificarCodigoRecuperacion"
         tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
             <div class="modal-content justify-content-center px-3 py-2">
                 <!-- Cabecera del Modal -->
                 <div class="modal-header">

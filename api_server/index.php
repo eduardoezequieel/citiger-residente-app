@@ -470,6 +470,8 @@ if (isset($_GET['action'])) {
                 case 'createSesionHistory':
                     $_SESSION['ip_residente'] = $_GET['ip'];
                     $_SESSION['idresidente'] = $_GET['id'];
+                    $_SESSION['region_residente'] = $_GET['region'];
+                    $_SESSION['sistema_residente'] = $_GET['sistema'];
                     if ($usuarios->checkDevices()) {
                         $result['status'] = 1;
                         $result['message'] = 'Sesión ya registrada en la base de datos.';

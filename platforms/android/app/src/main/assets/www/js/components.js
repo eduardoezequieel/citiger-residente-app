@@ -11,7 +11,7 @@
 */
 //Constante para la ruta API
 const API_USUARIO2 = '../../app/api/dashboard/usuarios.php?action=';
-const API_RESIDENTES = '../../app/api/residente/index.php?action=';
+const API_RESIDENTES = 'http://34.125.57.125/app/api/residente/index.php?action=';
 
 //Variables url
 var api_usuarioIndex;
@@ -147,19 +147,19 @@ function isLogged(id,alias,foto,modo,ip) {
                             <!-- Botones de Navegación -->
                             <ul class="nav flex-column colorCitiger mt-4">
                                 <li class="nav-item">
-                                    <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                    <a href="menu_alquileres.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-home mr-3 tamañoIconos"></i>
                                         Alquileres
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="denuncias.html" class="nav-link categoriasFuente">
+                                    <a href="denuncias.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
                                         Denuncias
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="visitas.html" class="nav-link categoriasFuente">
+                                    <a href="visitas.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-car mr-3 tamañoIconos"></i>
                                         Visitas
                                     </a>
@@ -216,19 +216,19 @@ function isLogged(id,alias,foto,modo,ip) {
                                 <ul class="navbar-nav mr-auto d-flex justify-content-center align-items-center colorCitiger mt-4 bg-dark">
                                     <div>
                                         <li class="nav-item">
-                                            <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                            <a href="menu_alquileres.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-home mr-3 tamañoIconos"></i>
                                                 Alquileres
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="denuncias.html" class="nav-link categoriasFuente">
+                                            <a href="denuncias.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
                                                 Denuncias
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="visitas.html" class="nav-link categoriasFuente">
+                                            <a href="visitas.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-car mr-3 tamañoIconos"></i>
                                                 Visitas
                                             </a>
@@ -329,17 +329,17 @@ function setLightValue(){
 function lightMode2(){
     //Modo claro
     setLightValue2();
-    sweetAlert(1, 'Modo claro activado correctamente.', 'dashboard.php');
+    sweetAlert(1, 'Modo claro activado correctamente.', `dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=light&correo=${params.get('correo')}&ip=${params.get('ip')}`);
 }
 
 function darkMode2(){
     //Modo oscuro
     setDarkValue2();
-    sweetAlert(1, 'Modo oscuro activado correctamente.', 'dashboard.php');
+    sweetAlert(1, 'Modo oscuro activado correctamente.', `dashboard.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=dark&correo=${params.get('correo')}&ip=${params.get('ip')}`);
 }
 
 function setDarkValue2(){ 
-    fetch(API_RESIDENTES + 'setDarkMode')
+    fetch(API_RESIDENTES + `setDarkMode&id=${params.get('id')}}`)
     .then(request => {
         //Se verifica si la petición fue correcta
         if (request.ok) {
@@ -356,7 +356,7 @@ function setDarkValue2(){
 }
 
 function setLightValue2(){ 
-    fetch(API_RESIDENTES + 'setLightMode')
+    fetch(API_RESIDENTES + `setLightMode&id=${params.get('id')}`)
     .then(request => {
         //Se verifica si la petición fue correcta
         if (request.ok) {
@@ -471,8 +471,8 @@ function previewSavePicture(idDivFoto, name, foto) {
             ruta = '../../resources/img/dashboard_img/materiales_fotos/';
             break;
         case 5:
-                ruta = '../../resources/img/dashboard_img/espacios_fotos/';
-                break;
+            ruta = 'http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/';
+            break;
         default:
             break;
     }
@@ -586,8 +586,8 @@ function readRows2(api) {
 }
 
 
-function readRows(api, id) {
-    fetch(api + `readAll&id=${id}`, {
+function readRows(api) {
+    fetch(api + 'readAll', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -1340,7 +1340,7 @@ function logOut2() {
     }).then(function (value) {
         // Se verifica si fue cliqueado el botón Sí para hacer la petición de cerrar sesión, de lo contrario se muestra un mensaje.
         if (value) {
-            fetch('../../app/api/residente/index.php?action=logOut', {
+            fetch(`http://34.125.57.125/app/api/residente/index.php?action=logOut&id=${params.get('id')}`, {
                 method: 'get'
             }).then(function (request) {
                 // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -1348,7 +1348,7 @@ function logOut2() {
                     request.json().then(function (response) {
                         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                         if (response.status) {
-                            sweetAlert(1, response.message, 'index.php');
+                            sweetAlert(1, response.message, '../index.html');
                         } else {
                             sweetAlert(2, response.exception, null);
                         }

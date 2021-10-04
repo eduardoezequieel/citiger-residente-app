@@ -35,187 +35,69 @@
 
 <body>
 
-    <!-- Inicio del Sidebar -->
-    <div class="vertical-nav colorCitiger" id="sidebar">
-        <div class="py-3 px-3 colorCitiger">
-            <div class="media d-flex">
-                <a href="dashboard.html" class="btn btnInicio"><img id="imgDashboard" src="../img/citigerDarkLogo2.png"
-                        alt="" class="img-fluid" width="140px"></a>
-            </div>
-        </div>
+    <div id="nav">
+        <input type="hidden" id="txtModo">
+    </div>
 
-        <!-- Perfil -->
-        <div id="tarjeta">
-            <div id="tarjetaPerfil" class="p-3">
+    <!-- Contenedor de la Pagina -->
+    <div class="page-content p-3" id="content">
+        <div id="cuadroContenido1">
+            <button id="sidebarCollapse" type="button" class="btn bg-darken"><i
+                    class="fa fa-bars categoriasFuente tamañoIconos"></i><small
+                    class="text-uppercase font-weight-bold"></small></button>
+
+            <!-- Desde aqui comienza el contenido -->
+            <div id="menuAlqui">
+                <div class="row justify-content-center mb-4">
+                    <div class="col justify-content-center d-flex">
+                        <h1 class="tituloMenu">Seleccione una opción</h1>
+                    </div>
+                </div>
+                <!-- Menú -->
                 <div class="row">
-                    <div class="col-3">
-                        <img src="../img/dashboard_img/residentes_fotos/' . $_SESSION['foto_residente'] . '"
-                            id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
-                    <div class="col-9">
-                        <label for="ajustes" class="pl-4 pt-2" id="usuario">' . $_SESSION['username'] .
-                            '</label>
-                        <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
-                        <input type="text" id="txtModo" class="d-none" value="'. $_SESSION['modo_residente'].'">
+                    <!-- Opción "alquiler" de menú -->
+                    <div
+                        class="col-xl-6 col-md-6 col-sm-12 col-xs-12 centrarBotones animate__animated animate__bounceIn">
+                        <a id="btnAlquileres" class="btn botonMenu1">
+                            <i class="fas fa-archway iconosBotonesMenu"></i>
+                            <label class="textoBotonesMenu">Alquiler</label>
+                        </a>
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-12" id="filaBotones">
-                        <div id="botones">
-                            <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil" id="ajustes"></a>
-                            <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
-                                id="cerrar"></a>
-                            <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode" onclick="lightMode2()"></a>
-                            <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode" onclick="darkMode2()"></a>
-                        </div>
+
+                    <!-- Opción "espacios" de menú -->
+                    <div
+                        class="col-xl-6 col-md-6 col-sm-12 col-xs-12 centrarBotones animate__animated animate__bounceIn">
+                        <a id="btnEspacios" class="btn botonMenu2">
+                            <i class="fas fa-home iconosBotonesMenu"></i>
+                            <label class="textoBotonesMenu">Espacios</label>
+                        </a>
                     </div>
                 </div>
             </div>
+            <!-- Desde aqui finaliza el contenido -->
+
         </div>
-
-        <!-- Botones de Navegación -->
-        <ul class="nav flex-column colorCitiger mt-4">
-            <li class="nav-item">
-                <a href="menu_alquileres.html" class="nav-link categoriasFuente">
-                    <i class="fas fa-home mr-3 tamañoIconos"></i>
-                    Alquileres
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="denuncias.html" class="nav-link categoriasFuente">
-                    <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
-                    Denuncias
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="visitas.html" class="nav-link categoriasFuente">
-                    <i class="fas fa-car mr-3 tamañoIconos"></i>
-                    Visitas
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- Fin del sidebar -->
-
-    <!-- Inicio del navbar para dispositivos moviles -->
-    <nav id="navbar" class="d-none navbar sticky-top navbar-expand-lg">
-        <a class="navbar-brand" href="dashboard.html">
-            <img src="../img/citigerWhiteLogo2.png" alt="#" id="imgDashboard2" class="img-fluid" width="120px"></a>
-        </a>
-        <button class="btn bg-darken2 mt-2 float-right" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="fas fa-caret-down"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center align-items-center">
-                    <!-- Perfil -->
-                    <div id="tarjeta">
-                        <div id="tarjetaPerfil" class="p-3">
-                            <div class="row">
-                                <div class="col-3">
-                                    <img src="../img/dashboard_img/residentes_fotos/' . $_SESSION['foto_residente'] . '"
-                                        id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px"
-                                        height="60px"> </div>
-                                <div class="col-9">
-                                    <label for="ajustes" class="pl-4 pt-2" id="usuario">' . $_SESSION['username'] .
-                                        '</label>
-                                    <label for="ajustes" class="pl-4" id="tipoUsuario">Residente</label>
-                                    <input type="text" id="txtModo" class="d-none"
-                                        value="'. $_SESSION['modo_residente'].'">
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12" id="filaBotones">
-                                    <div id="botones">
-                                        <a href="ajustes_cuenta.html" class="btn fas fa-cog botonesPerfil"
-                                            id="ajustes"></a>
-                                        <a href="#" onclick="logOut2()" class="btn fas fa-sign-out-alt botonesPerfil"
-                                            id="cerrar"></a>
-                                        <a href="#" class="btn fas fa-sun botonesPerfil" id="lightMode2"
-                                            onclick="lightMode2()"></a>
-                                        <a href="#" class="btn fas fa-moon botonesPerfil" id="darkMode2"
-                                            onclick="darkMode2()"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ul class="navbar-nav mr-auto d-flex justify-content-center align-items-center colorCitiger mt-4 bg-dark">
-                <div>
-                    <li class="nav-item">
-                        <a href="menu_alquileres.html" class="nav-link categoriasFuente">
-                            <i class="fas fa-home mr-3 tamañoIconos"></i>
-                            Alquileres
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="denuncias.html" class="nav-link categoriasFuente">
-                            <i class="fas fa-exclamation-triangle mr-3 tamañoIconos"></i>
-                            Denuncias
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="visitas.html" class="nav-link categoriasFuente">
-                            <i class="fas fa-car mr-3 tamañoIconos"></i>
-                            Visitas
-                        </a>
-                    </li>
-                </div>
-            </ul>
-        </div>
-    </nav>
-
-<link rel="stylesheet" href="../../resources/css/estilos3.css">
-<!-- Contenedor de la Pagina -->
-<div class="page-content p-3" id="content">
-    <div id="cuadroContenido1">
-        <button id="sidebarCollapse" type="button" class="btn bg-darken"><i
-                class="fa fa-bars categoriasFuente tamañoIconos"></i><small
-                class="text-uppercase font-weight-bold"></small></button>
-
-        <!-- Desde aqui comienza el contenido -->
-        <div id="menuAlqui">
-            <div class="row justify-content-center mb-4">
-                <div class="col justify-content-center d-flex">
-                    <h1 class="tituloMenu">Seleccione una opción</h1>
-                </div>
-            </div>
-            <!-- Menú -->
-            <div class="row">
-                <!-- Opción "alquiler" de menú -->
-                <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12 centrarBotones animate__animated animate__bounceIn">
-                    <a href="alquileres.php" class="btn botonMenu1">
-                        <i class="fas fa-archway iconosBotonesMenu"></i>
-                        <label class="textoBotonesMenu">Alquiler</label>
-                    </a>
-                </div>
-
-                <!-- Opción "espacios" de menú -->
-                <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12 centrarBotones animate__animated animate__bounceIn">
-                    <a href="espacios.php" class="btn botonMenu2">
-                        <i class="fas fa-home iconosBotonesMenu"></i>
-                        <label class="textoBotonesMenu">Espacios</label>
-                    </a>
-                </div>
-            </div>
-        </div>
-         <!-- Desde aqui finaliza el contenido -->
 
     </div>
+    <!-- Final del contenido -->
 
-</div>
-<!-- Final del contenido -->
-
-<script src="../js/lightbox-plus-jquery.min.js"></script>
+    <script src="../js/lightbox-plus-jquery.min.js"></script>
     <script src="../js/jquery-3.5.1.slim.min.js"></script>
     <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/datatables.min.js"></script>
     <script src="../js/sweetalert.min.js"></script>
+    <script>
+        //se capturan los datos de la url
+        var params = new URLSearchParams(location.search);
+        document.getElementById('btnAlquileres').addEventListener('click',function(){
+            window.location.href = `alquileres.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
+        })
+
+        document.getElementById('btnEspacios').addEventListener('click',function(){
+            window.location.href = `espacios.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
+        })
+    </script>
     <script type="text/javascript" src="../controllers/logout.js"></script>
     <script src="../js/components.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js">

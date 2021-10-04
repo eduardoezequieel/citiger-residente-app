@@ -1,7 +1,8 @@
+//se capturan los datos de la url
+var params = new URLSearchParams(location.search);
 //Constantes para las api
-const API_VISITA = '../../app/api/residente/visitas.php?action=';
-const ENDPOINT_VISITANTE = '../../app/api/residente/visitas.php?action=readVisitante';
-
+const API_VISITA = `http://34.125.57.125/app/api/residente/visitas.php?id=${params.get('id')}&action=`;
+const ENDPOINT_VISITANTE = `http://34.125.57.125/app/api/residente/visitas.php?id=${params.get('id')}&action=readVisitante`;
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     fillSelect(ENDPOINT_VISITANTE, 'cbVisitante', null);

@@ -1,25 +1,24 @@
-//Constante para la direccion de la API
-const API_DASHBOARD = 'http://34.125.57.125/app/api/residente/dashboard.php?action=';
-const API_USUARIOS = 'http://34.125.57.125/app/api/residente/index.php?action=';
 //se capturan los datos de la url
 var params = new URLSearchParams(location.search);
-
+//Constante para la direccion de la API
+const API_DASHBOARD = `http://34.125.57.125/app/api/residente/dashboard.php?id=${params.get('id')}&action=`;
+const API_USUARIOS = `http://34.125.57.125/app/api/residente/index.php?id=${params.get('id')}&action=`;
 //Se ejecutan al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     
     var id = params.get('id');
     var ip = params.get('ip');
     var correo = params.get('correo');
-    contadorDenuncias(id);
-    contadorVisitas(id);
-    contadorAportacion(id);
-    readRows(API_DASHBOARD, id);
-    createSesionHistory(id, ip);
-    checkIfEmailIsValidated(id);
+    contadorDenuncias();
+    contadorVisitas();
+    contadorAportacion();
+    readRows(API_DASHBOARD);
+    createSesionHistory(ip);
+    checkIfEmailIsValidated();
 });
 
-function checkIfEmailIsValidated(id) {
-    fetch(API_USUARIOS + `checkIfEmailIsValidated&id=${id}`, {
+function checkIfEmailIsValidated() {
+    fetch(API_USUARIOS + 'checkIfEmailIsValidated', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -36,7 +35,8 @@ function checkIfEmailIsValidated(id) {
                         document.getElementById('alerta-verificacion').remove();
                     }
                 } else {
-                    sweetAlert(2, response.exception, null);
+                    console.log('a');
+                    sweetAlert(1, response.exception, null);
                 }
             });
         } else {
@@ -59,12 +59,12 @@ function autotab(current, to, prev) {
 
 //Funcion que se ejecuta al hacer click en un boton
 document.getElementById('btnSendEmailCode').addEventListener('click',function(){
-    sendEmailCode(params.get('id'), params.get('correo'));
+    sendEmailCode(params.get('correo'));
 })
 
 //Funcion para enviar un correo electronico con el codigo de verificacion
-function sendEmailCode(id, correo){
-    fetch(API_USUARIOS + `sendEmailCode&id=${id}&correo=${correo}`, {
+function sendEmailCode(correo){
+    fetch(API_USUARIOS + `sendEmailCode&correo=${correo}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -98,7 +98,7 @@ document.getElementById('verificarCodigo-form').addEventListener('submit', funct
     let params = new URLSearchParams(location.search);
     var id = params.get('id');
     event.preventDefault();
-    fetch(API_USUARIOS + `verifyCodeEmail&id=${params.get('id')}`, {
+    fetch(API_USUARIOS + 'verifyCodeEmail', {
         method: 'post',
         body: new FormData(document.getElementById('verificarCodigo-form'))
     }).then(function (request) {
@@ -122,8 +122,8 @@ document.getElementById('verificarCodigo-form').addEventListener('submit', funct
     });
 });
 
-function contadorDenuncias(id) {
-    fetch(API_DASHBOARD + `contadorDenuncias&id=${id}`, {
+function contadorDenuncias() {
+    fetch(API_DASHBOARD + 'contadorDenuncias', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -145,8 +145,8 @@ function contadorDenuncias(id) {
     });
 }
 
-function contadorVisitas(id) {
-    fetch(API_DASHBOARD + `contadorVisitas&id=${id}`, {
+function contadorVisitas() {
+    fetch(API_DASHBOARD + 'contadorVisitas', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -169,8 +169,8 @@ function contadorVisitas(id) {
 }
 
 
-function contadorAportacion(id) {
-    fetch(API_DASHBOARD + `contadorAportacion&id=${id}`, {
+function contadorAportacion() {
+    fetch(API_DASHBOARD + 'contadorAportacion', {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
@@ -249,8 +249,8 @@ function fillTable(dataset) {
     });
 }
 
-function createSesionHistory(id, ip){
-    fetch(API_USUARIOS + `createSesionHistory&id=${id}&ip=${ip}`, {
+function createSesionHistory(ip){
+    fetch(API_USUARIOS + `createSesionHistory&ip=${ip}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.

@@ -147,7 +147,7 @@ function isLogged(id,alias,foto,modo,ip) {
                             <!-- Botones de Navegación -->
                             <ul class="nav flex-column colorCitiger mt-4">
                                 <li class="nav-item">
-                                    <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                    <a href="menu_alquileres.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-home mr-3 tamañoIconos"></i>
                                         Alquileres
                                     </a>
@@ -159,7 +159,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="visitas.html" class="nav-link categoriasFuente">
+                                    <a href="visitas.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                         <i class="fas fa-car mr-3 tamañoIconos"></i>
                                         Visitas
                                     </a>
@@ -216,7 +216,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                 <ul class="navbar-nav mr-auto d-flex justify-content-center align-items-center colorCitiger mt-4 bg-dark">
                                     <div>
                                         <li class="nav-item">
-                                            <a href="menu_alquileres.html" class="nav-link categoriasFuente">
+                                            <a href="menu_alquileres.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-home mr-3 tamañoIconos"></i>
                                                 Alquileres
                                             </a>
@@ -228,7 +228,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="visitas.html" class="nav-link categoriasFuente">
+                                            <a href="visitas.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}" class="nav-link categoriasFuente">
                                                 <i class="fas fa-car mr-3 tamañoIconos"></i>
                                                 Visitas
                                             </a>
@@ -471,8 +471,8 @@ function previewSavePicture(idDivFoto, name, foto) {
             ruta = '../../resources/img/dashboard_img/materiales_fotos/';
             break;
         case 5:
-                ruta = '../../resources/img/dashboard_img/espacios_fotos/';
-                break;
+            ruta = 'http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/';
+            break;
         default:
             break;
     }

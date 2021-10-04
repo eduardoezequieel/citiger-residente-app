@@ -12,7 +12,8 @@
         //Se crea el array para guardar la respuesta
         $result = array('status'=>0,'error'=>0, 'message'=>null,'exception'=> null,'contador'=>0);
         //Se verifica si hay una sesion iniciada
-        if (isset($_SESSION['idresidente'])) {
+        if (isset($_GET['id'])) {
+            $_SESSION['idresidente'] = $_GET['id'];
             //Se evalua cual acción es la que se va a ejecutar
             switch ($_GET['action']) {
                 //Caso para leer todos los datos de la tabla
@@ -419,6 +420,7 @@
         } else {
             $result['exception'] = 'La acción solicitada no está disponible fuera de la sesión.';
         }
+        session_destroy();
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('content-type: application/json; charset=utf-8');
         // Se imprime el resultado en formato JSON y se retorna al controlador.

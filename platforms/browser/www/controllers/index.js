@@ -64,7 +64,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
                         correoIndex = response.correo_residente;
                         ipIndex = response.ip_residente;
                     
-                        sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${response.ip_residente}`);
+                        sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
                     }
                 } else {
                     if (response.error) {
@@ -134,7 +134,7 @@ document.getElementById('checkCodeAuth-form').addEventListener('submit', functio
                 if (response.status) {
                     // Mostramos mensaje de exito
                     closeModal('verificarCodigoAuth');
-                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('ip').value}`);
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }
@@ -196,7 +196,7 @@ document.getElementById('90password-form').addEventListener('submit', function (
             request.json().then(response => {
                 //Verificando si la respuesta es satisfactoria de lo contrario se muestra la excepción
                 if (response.status) {
-                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('ip').value}`);
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
@@ -402,7 +402,6 @@ function getOS()
         (jsonResponse) =>
         (document.getElementById('txtLoc').value=jsonResponse.region,
         document.getElementById('txtIP').value=jsonResponse.ip)
-        
       )
 
 }

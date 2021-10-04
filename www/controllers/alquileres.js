@@ -1,13 +1,14 @@
+//se capturan los datos de la url
+var params = new URLSearchParams(location.search);
 //constante para la ruta de la api
-const API_ALQUILERES = '../../app/api/residente/alquileres.php?action=';
-const ENDPOINT_ESTADO_ALQUILER = '../../app/api/residente/alquileres.php?action=readRentalStatus';
-const ENDPOINT_ESPACIO_ALQUILERES = '../../app/api/residente/alquileres.php?action=readSpace';
+const API_ALQUILERES = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=`;
+const ENDPOINT_ESTADO_ALQUILER = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=readRentalStatus`;
+const ENDPOINT_ESPACIO_ALQUILERES = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=readSpace`;
 
 //Evento al terminar de cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     //Llenando los combobox necesarios
     fillSelect(ENDPOINT_ESTADO_ALQUILER,'cbEstadoAlquiler',null);
-   
     // Se declara e inicializa un objeto para obtener la fecha y hora actual.
     let today = new Date();
     // Se declara e inicializa una variable para guardar el día en formato de 2 dígitos.
@@ -20,23 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let date = `${year}-${month}-${day}`;
     // Se asigna la fecha como valor máximo en el campo del formulario.
     document.getElementById('txtFecha').setAttribute('min', date);
-
-    //Verificando si existen registros
-    fetch (API_ALQUILERES + 'readAll').then(request => {
-        //verificando si la petición fue correcta
-        if (request.ok) {
-            request.json().then(response => {
-                //Se verifica si la respuesta fue no fue satisfactoria de lo contrario no muestra nada
-                if (response.status) {
-                    readRows(API_ALQUILERES);
-                } else {
-                    sweetAlert(4,response.exception, null);
-                }
-            })
-        } else {
-            console.log(request.status + ' ' + request.statusText);
-        }
-    }).catch(error=>console.log(error));
+    readEspacios(API_ALQUILERES);
+    readRows(API_ALQUILERES);    
+       
 
 })
 
@@ -50,23 +37,24 @@ function fillTable(dataset){
             content += `
                     <div class="animate__animated animate__bounceIn col-xl-4 col-md-4 col-sm-12 col-xs-12 mt-2 d-flex margenTarjetas justify-content-center align-items-center text-center">
                         <!-- Inicio de Tarjeta -->
-                        <div class="tarjeta">
+                        <div class="tarjeta3">
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="../../resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12 text-left">
                                     <h1 class="letraTarjetaTitulo">${row.nombre}</h1>
                                     <h1 class="letraTarjeta">Hora de inicio: <span class="letraDestacadaTarjeta">${row.horainicio}</span></h1>
+                                    <h1 class="letraTarjeta">Fecha: <span class="letraDestacadaTarjeta">${row.fecha}</span></h1>
                                 </div>
                             </div>
                             <!-- Fila para Boton -->
                             <div class="row">
                                 <div class="col-12">
-                                <a href="#" onclick="readDataOnModal(${row.idalquiler}) " data-target="#administrarAlquiler" data-toggle="modal" class="btn btnTabla"><i class="fas fa-eye"></i></a>
+                                <a href="#" onclick="readDataOnModal(${row.idalquiler}) " data-target="#verAlquiler" data-toggle="modal" class="btn btnTabla"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
 
@@ -83,7 +71,7 @@ function fillTable(dataset){
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="../../resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.57.125/resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <!-- Fila para Información -->
@@ -96,7 +84,7 @@ function fillTable(dataset){
                             <!-- Fila para Boton -->
                             <div class="row">
                                 <div class="col-12">
-                                <a href="#" onclick="readDataOnModal(${row.idalquiler}) " data-target="#administrarAlquiler" data-toggle="modal" class="btn btnTabla"><i class="fas fa-eye"></i></a>
+                                <a href="#" onclick="readDataOnModal(${row.idalquiler}) " data-target="#verAlquiler" data-toggle="modal" class="btn btnTabla"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
 
@@ -111,61 +99,6 @@ function fillTable(dataset){
 
 }
 
-//Carga de datos del registro seleccionado
-function readDataOnModal(id){
-    //Ocultando botón de solicitar
-    document.getElementById('btnAgregar').className = 'd-none';
-    document.getElementById('btnActualizar').className = 'btn btnAgregarFormulario mr-2';
-    // Se define un objeto con los datos del registro seleccionado.
-    const data = new FormData();
-    data.append('idAlquiler', id);
-
-    fetch(API_ALQUILERES + 'readOne', {
-        method: 'post',
-        body: data
-    }).then(request => {
-        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
-        if (request.ok) {
-            request.json().then(response => {
-                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-                if (response.status) {
-                    // Se inicializan los campos del formulario con los datos del registro seleccionado.
-                    document.getElementById('idAlquiler').value = response.dataset.idalquiler;
-                    document.getElementById('idEspacio').value = response.dataset.idespacio;
-                    document.getElementById('txtFecha').value = response.dataset.fecha;
-                    document.getElementById('txtHoraInicio').value = response.dataset.horainicio;
-                    document.getElementById('txtHoraFin').value = response.dataset.horafin;
-                    document.getElementById('txtPrecio').value = response.dataset.precio;
-                    document.getElementById('txtEstado6').value = response.dataset.estadoalquiler;
-                    fillSelect(ENDPOINT_ESPACIO_ALQUILERES,'cbEspacio',response.dataset.idespacio);
-                    if(response.dataset.estadoalquiler == 'Revisión'){
-                        //Ocultando y mostrando botones
-                        document.getElementById('btnAgregar').className = 'd-none';
-                        document.getElementById('btnActualizar').className = 'btn btnAgregarFormulario mr-2';
-                        document.getElementById('btnCancelar').className = 'btn btnAgregarFormularioResident mr-2';
-                        document.getElementById('txtPrecio').className = 'form-control cajaTextoFormularioPrecio';
-                        document.getElementById('txtPrecio1').className = 'tituloCajaTextoFormulario';
-                        document.getElementById('txtEstado6').className = 'form-control cajaTextoFormularioPrecio';
-                        document.getElementById('txtEstado61').className = 'tituloCajaTextoFormulario';
-                    } else {
-                        //Ocultando y mostrando botones
-                        document.getElementById('btnAgregar').className = 'd-none';
-                        document.getElementById('btnActualizar').className = 'd-none';
-                        document.getElementById('btnCancelar').className = 'd-none';
-                        document.getElementById('txtPrecio').className = 'd-none';
-                        document.getElementById('txtPrecio1').className = 'd-none';
-                        document.getElementById('txtEstado6').className = 'd-none';
-                        document.getElementById('txtEstado61').className = 'd-none';
-                    }
-                } else {
-                    sweetAlert(2, response.exception, null);
-                }
-            });
-        } else {
-            console.log(request.status + ' ' + request.statusText);
-        }
-    }).catch(error => console.log(error));
-}
 
 //Método para resetear botones
 document.getElementById('btnInsertDialog').addEventListener('click', function () {
@@ -174,11 +107,6 @@ document.getElementById('btnInsertDialog').addEventListener('click', function ()
     document.getElementById('btnAgregar').className = 'btn btnAgregarFormulario mr-2';
     document.getElementById('btnActualizar').className = 'd-none';
     document.getElementById('btnCancelar').className = 'd-none';
-    document.getElementById('txtPrecio').className = 'd-none';
-    document.getElementById('txtPrecio1').className = 'd-none';
-    document.getElementById('txtEstado6').className = 'd-none';
-    document.getElementById('txtEstado61').className = 'd-none';
-    fillSelect(ENDPOINT_ESPACIO_ALQUILERES,'cbEspacio',null);
     document.getElementById('idEspacio').value = 0;
 })
 
@@ -190,10 +118,10 @@ document.getElementById('btnInsertDialog').addEventListener('click', function ()
     //Verificando la acción que se va a realizar
     if(document.getElementById('btnAgregar').className != 'd-none') {
         //Agregando el registro
-        saveRow(API_ALQUILERES, 'createRow','alquiler-form','administrarAlquiler');
+        saveRow(API_ALQUILERES, 'createRow','alquiler-form','agregarAlquiler');
     } else {
         //Actualizando
-        saveRow(API_ALQUILERES, 'updateRow','alquiler-form','administrarAlquiler');
+        saveRow(API_ALQUILERES, 'updateRow','alquiler-form','agregarAlquiler');
     } 
 })
 
@@ -202,7 +130,7 @@ document.getElementById('search-form').addEventListener('submit',function (event
     //Evitamos recargar la pagina
     event.preventDefault();
     //Llamamos la funcion
-    searchRows(API_ALQUILER, 'search-form');
+    searchRows(API_ALQUILERES, 'search-form');
 })
 
 /*Cada vez que cambie el valor del select, se enviara a un input invisible y de igual forma se 
@@ -272,3 +200,116 @@ document.getElementById('btnCancelar').addEventListener('click', function (event
         }
     });
 })
+
+
+//Llenado de cartas
+function fillTable2(dataset) {
+    let content = '';
+    // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+    dataset.map(function (row) {
+        // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+        content += `
+        <div class="animate__animated animate__bounceIn col-xl-4 col-md-4 col-sm-12 col-xs-12 mt-4 d-flex margenTarjetas justify-content-center align-items-center text-center">
+                            <!-- Inicio de Tarjeta -->
+                            <div class="tarjeta">
+                                <!-- Fila para Imagen -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    </div>
+                                </div>
+                                <!-- Fila para Información -->
+                                <div class="row mt-2">
+                                    <div class="col-12 text-left">
+                                        <h1 class="letraTarjetaTitulo">${row.nombre}</h1>
+                                        <h1 class="letraTarjeta">Capacidad: <span class="letraDestacadaTarjeta">${row.capacidad}</span></h1>
+                                    </div>
+                                </div>
+                                <!-- Fila para Boton -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button data-toggle="modal" onclick="readOneEspacio(${row.idespacio}) " data-target="#agregarAlquiler" data-dismiss="modal" class="btn botonesTarjeta"><span class="fas fa-plus mr-2"></span>Agregar</button>
+                                    </div>
+                                </div>
+                                <!-- Fin de Tarjeta -->
+                            </div>
+
+
+                        </div>
+
+                    
+        `;
+    });
+    // Se agregan las filas al cuerpo de la tabla mediante su id para mostrar los registros.
+    document.getElementById('espacios').innerHTML = content;
+}
+
+//Carga de datos del registro seleccionado
+function readOneEspacio(id) {
+    // Se configuran los botones dependiendo de la accion seleccionada
+    document.getElementById('btnAgregar').className = "btn btnAgregarFormulario mr-2";
+    document.getElementById('btnActualizar').className = "d-none";
+    document.getElementById('btnCancelar').className = "d-none";
+   
+
+
+    const data = new FormData();
+    data.append('idEspacio', id);
+    //Se ocultan los botones del formulario.
+
+
+    fetch(API_ALQUILERES + 'readOneEspacio', {
+        method: 'post',
+        body: data
+    }).then(request => {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(response => {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    // Se inicializan los campos del formulario con los datos del registro seleccionado.
+                    document.getElementById('idEspacio').value = response.dataset.idespacio;
+                    document.getElementById('lblEspacio2').textContent = (response.dataset.nombre);
+
+
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(error => console.log(error));
+}
+
+
+
+//Carga de datos del registro seleccionado
+function readDataOnModal(id) {
+    // Se define un objeto con los datos del registro seleccionado.
+    const data = new FormData();
+    data.append('idAlquiler2', id);
+    //Se ocultan los botones del formulario.
+    fetch(API_ALQUILERES + 'readOne', {
+        method: 'post',
+        body: data
+    }).then(request => {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(response => {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    document.getElementById('lblFecha').textContent = (response.dataset.fecha);
+                    document.getElementById('lblInicio').textContent = (response.dataset.horainicio);
+                    document.getElementById('lblFin').textContent = (response.dataset.horafin);
+                    document.getElementById('lblEstado').textContent = (response.dataset.estadoalquiler);
+
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(error => console.log(error));
+}
