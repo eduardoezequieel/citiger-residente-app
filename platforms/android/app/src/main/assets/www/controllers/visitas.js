@@ -72,6 +72,13 @@ document.getElementById('verificarDui-form').addEventListener('submit',function(
 document.getElementById('btnInsertDialog').addEventListener('click', function () {
     // Se reinician los campos del formulario
     document.getElementById('txtDuiVerificar').value = '';
+    //Función para resetear validaciones del lado del cliente
+    clearForm('Visitante-form')
+    clearForm('administrarVisita-form')
+    document.getElementById('txtDuiVerificar').classList.remove("success")
+    document.getElementById('txtDuiVerificar').classList.remove("error")
+    document.getElementById('cbc1').classList.remove("success")
+    document.getElementById('cbc2').classList.remove("success")
 });
 
 //Agregar y actualizar información

@@ -5,15 +5,11 @@ const API_DASHBOARD = `http://34.125.57.125/app/api/residente/dashboard.php?id=$
 const API_USUARIOS = `http://34.125.57.125/app/api/residente/index.php?id=${params.get('id')}&action=`;
 //Se ejecutan al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
-    
-    var id = params.get('id');
-    var ip = params.get('ip');
-    var correo = params.get('correo');
     contadorDenuncias();
     contadorVisitas();
     contadorAportacion();
     readRows(API_DASHBOARD);
-    createSesionHistory(ip);
+    createSesionHistory();
     checkIfEmailIsValidated();
 });
 
@@ -249,8 +245,8 @@ function fillTable(dataset) {
     });
 }
 
-function createSesionHistory(ip){
-    fetch(API_USUARIOS + `createSesionHistory&ip=${ip}`, {
+function createSesionHistory(){
+    fetch(API_USUARIOS + `createSesionHistory&ip=${params.get('ip')}&region=${params.get('region')}&sistema=${params.get('sistema')}`, {
         method: 'get'
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.

@@ -1328,6 +1328,23 @@ function logOut() {
     });
 }
 
+function checkInputHora(inicio, fin) {
+    //Obteniendo el valor de los input
+    var start1 = document.getElementById(inicio);
+    var end1 = document.getElementById(fin);
+    if (document.getElementById(inicio).value >= document.getElementById(fin).value) {
+        end1.classList.remove("success");
+        end1.classList.add("error");
+        start1.classList.remove("success");
+        start1.classList.add("error");
+    } else {
+        end1.classList.remove("error");
+        end1.classList.add("success");
+        start1.classList.remove("error");
+        start1.classList.add("success");
+    }
+}
+
 // Función para mostrar un mensaje de confirmación al momento de cerrar sesión del residente.
 function logOut2() {
     swal({
@@ -1501,7 +1518,7 @@ function checkTelefono(input) {
 function checkAlfanumerico(i){
     document.getElementById(i).classList.remove("success");
     document.getElementById(i).classList.add("error");
-    var regex = /^[a-z0-9.]+$/i;
+    var regex = /^[A-Za-z0-9\s.]+$/g;
 
     if (document.getElementById(i).value.match(regex)) {
         document.getElementById(i).classList.remove("error");

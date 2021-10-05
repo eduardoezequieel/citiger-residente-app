@@ -156,8 +156,9 @@
                                     <!-- Combobox, si se desea usar, copiar todo el div que incluye la clase
                                 cbCitiger, para cambiarle el tamaño, crear un id en cbCitiger y usar el width
                                 deseado en el combobox  -->
-                                    <div class="cbCitiger">
-                                        <select class="custom-select" id="cbTipo" name="cbTipo">
+                                    <div class="cbCitiger" id="cbc1">
+                                        <select class="custom-select" id="cbTipo" name="cbTipo"
+                                            onchange="checkCb('cbc1')">
                                             <option selected="">Seleccionar...</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
@@ -169,6 +170,7 @@
                                 <div class="form-group">
                                     <label class="tituloCajaTextoFormulario" for="txtDescripcion">Descripción:</label>
                                     <textarea class="form-control cajaTextoFormulario2"
+                                        onchange="checkAlfanumerico('txtDescripcion')"
                                         placeholder="Escriba su descripcion..." id="txtDescripcion"
                                         name="txtDescripcion" rows="4" maxlength="200"></textarea>
 

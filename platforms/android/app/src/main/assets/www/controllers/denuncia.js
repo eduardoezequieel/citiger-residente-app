@@ -149,6 +149,9 @@ document.getElementById('btnInsertDialog').addEventListener('click', function ()
     document.getElementById('idDenuncia').value = '';
     document.getElementById('txtDescripcion').value = '';
 
+    //Función para resetear validaciones del lado del cliente
+    clearForm('administrarDenuncia-form');
+    document.getElementById('cbc1').classList.remove("success")
 });
 
 //Agregar y actualizar información

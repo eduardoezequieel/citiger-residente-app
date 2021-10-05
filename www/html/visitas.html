@@ -38,7 +38,7 @@
     <div id="nav">
         <input type="hidden" id="txtModo">
     </div>
-    
+
     <!-- Contenedor de la Pagina -->
     <div class="page-content p-3" id="content">
         <div id="cuadroContenido">
@@ -203,8 +203,9 @@
                                 <!-- Combobox, si se desea usar, copiar todo el div que incluye la clase
                                 cbCitiger, para cambiarle el tamaño, crear un id en cbCitiger y usar el width
                                 deseado en el combobox  -->
-                                <div class="cbCitiger">
-                                    <select class="custom-select" id="cbGenero" name="cbGenero">
+                                <div class="cbCitiger" id="cbc1">
+                                    <select class="custom-select" id="cbGenero" name="cbGenero"
+                                        onchange="checkCb('cbc1')">
                                         <option selected="default">Seleccionar...</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Femenino</option>
@@ -212,8 +213,9 @@
                                 </div>
 
                                 <label class="tituloCajaTextoFormulario mt-2" for="txtPlaca">Placa:</label>
-                                <input type="text" class="form-control cajaTextoFormulario2" id="txtPlaca"
-                                    name="txtPlaca" placeholder="P123 456" maxlength="8">
+                                <input type="text" class="form-control cajaTextoFormulario2"
+                                    onchange="checkInput('txtPlaca')" id="txtPlaca" name="txtPlaca"
+                                    placeholder="P123 456" maxlength="8">
                             </div>
                         </div>
                         <div class="row justify-content-center mt-3">
@@ -257,15 +259,16 @@
                             <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
 
                                 <label class="tituloCajaTextoFormulario mt-2" for="txtFecha">Fecha:</label>
-                                <input type="date" class="form-control cajaTextoModal" id="txtFecha" name="txtFecha"
-                                    placeholder="AAAA-MM-DD" Required>
+                                <input type="date" class="form-control cajaTextoModal" onchange="checkInput('txtFecha')"
+                                    id="txtFecha" name="txtFecha" placeholder="AAAA-MM-DD" Required>
 
                                 <h1 class="tituloCajaTextoFormulario mb-2">Visita Recurrente</h1>
                                 <!-- Combobox, si se desea usar, copiar todo el div que incluye la clase
                                             cbCitiger, para cambiarle el tamaño, crear un id en cbCitiger y usar el width
                                             deseado en el combobox  -->
-                                <div class="cbCitiger w-100">
-                                    <select class="custom-select" id="cbVisitaR" name="cbVisitaR">
+                                <div class="cbCitiger w-100" id="cbc2">
+                                    <select class="custom-select" id="cbVisitaR" name="cbVisitaR"
+                                        onchange="checkCb('cbc2')">
                                         <option selected="default">Seleccionar...</option>
                                         <option value="Si">Si</option>
                                         <option value="No">No</option>
@@ -421,6 +424,7 @@
         </div>
     </div>
     <!-- Fin del Modal -->
+
 
     <script src="../js/lightbox-plus-jquery.min.js"></script>
     <script src="../js/jquery-3.5.1.slim.min.js"></script>
