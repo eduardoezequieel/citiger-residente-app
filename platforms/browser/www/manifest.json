@@ -1,11 +1,17 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "CitigerResidente",
-  "short_name": "CitigerResidente",
+  "name": "Citiger",
+  "short_name": "Citiger",
   "version": "com.citiger.residente",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
-  "author": "Apache Cordova Team",
-  "icons": [],
+  "description": "Citiger para residentes.",
+  "author": "CitigerProject Team",
+  "icons": [
+    {
+      "src": "/www/img/citigerLogo.png",
+      "type": "image/png",
+      "sizes": "57x57"
+    }
+  ],
   "start_url": "index.html"
 }

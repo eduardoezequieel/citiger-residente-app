@@ -245,6 +245,7 @@ function fillTable(dataset) {
     });
 }
 
+//Función para crear el historial de sesiones
 function createSesionHistory(){
     fetch(API_USUARIOS + `createSesionHistory&ip=${params.get('ip')}&region=${params.get('region')}&sistema=${params.get('sistema')}`, {
         method: 'get'
@@ -265,4 +266,16 @@ function createSesionHistory(){
     }).catch(function (error) {
         console.log(error);
     });
+}
+
+//Función para abrir enlace a las visitas
+function showVisitas(){
+    //Redireccionando a las visitas
+    window.location.href = `../html/visitas.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
+}
+
+//Función para abrir enlace a las denuncias
+function showDenuncias(){
+    //Redireccionando a las visitas
+    window.location.href = `../html/denuncias.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
 }

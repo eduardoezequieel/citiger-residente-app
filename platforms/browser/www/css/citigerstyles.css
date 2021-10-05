@@ -965,6 +965,10 @@ option[selected] {
   border-radius: 10px;
 }
 
+.btnApor {
+  margin-top: 5px;
+}
+
 .btnTarjetaDashboard3:hover {
   color: #20BFA9;
   background-color: #6af6e4;

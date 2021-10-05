@@ -79,9 +79,7 @@
                                             class="fas fa-ellipsis-v"></span></button>
                                     <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
                                         aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="denuncias.html">Denuncias</a>
-                                        <a class="dropdown-item" href="#">Generar Reporte</a>
-
+                                        <button class="dropdown-item" onclick="showDenuncias()">Denuncias</button>
                                     </div>
                                 </div>
                             </div>
@@ -115,9 +113,7 @@
                                             class="fas fa-ellipsis-v"></span></button>
                                     <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
                                         aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="visitas.html">Visitas</a>
-                                        <a class="dropdown-item" href="#">Generar Reporte</a>
-
+                                        <button class="dropdown-item" onclick="showVisitas()">Visitas</button>
                                     </div>
                                 </div>
                             </div>
@@ -141,18 +137,7 @@
                 <div class="col-xl-4 col-md-4 col-sm-12 col-xs-12 margenTarjetas">
                     <div class="tarjetaDashboard animate__animated animate__fadeInDown">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="dropdown">
-                                    <button class="btn btnTarjetaDashboard3" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                                            class="fas fa-ellipsis-v"></span></button>
-                                    <div class="dropdown-menu animate__animated animate__bounceIn mt-5"
-                                        aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Aportaciones</a>
-                                        <a class="dropdown-item" href="#">Generar Reporte</a>
-
-                                    </div>
-                                </div>
+                            <div class="col-12 mt-5">
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -179,7 +164,7 @@
             </div>
             <!-- Desde aqui comienza la tabla -->
             <div class="row justify-content-center table-responsive animate__animated animate__fadeInUp tablaResponsive"
-                id="">
+                id="Aportaciones">
                 <div class="col-12 justify-content-center align-items-center text-center">
                     <table class="table table-borderless citigerTable" id="data-table2">
                         <thead>

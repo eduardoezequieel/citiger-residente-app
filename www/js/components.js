@@ -1328,6 +1328,13 @@ function logOut() {
     });
 }
 
+//Método para validar del lado del cliente un select
+function checkCb(input) {
+    var field = document.getElementById(input);
+    field.classList.add("success");
+}
+
+//Método para validar del lado del cliente las horas de los alquileres
 function checkInputHora(inicio, fin) {
     //Obteniendo el valor de los input
     var start1 = document.getElementById(inicio);
