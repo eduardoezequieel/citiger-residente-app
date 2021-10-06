@@ -318,7 +318,7 @@ document.getElementById('img-form').addEventListener('submit', function (event) 
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
                     // Se muestra un mensaje y se direcciona a la página web de bienvenida para actualizar los datos en el menú.
-                    window.location.href = `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${params.get('foto')}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
+                    window.location.href = `ajustes_cuenta.html?id=${params.get('id')}&alias=${params.get('alias')}&foto=${response.foto}&modo=${params.get('modo')}&correo=${params.get('correo')}&ip=${params.get('ip')}`;
                 } else {
                     sweetAlert(2, response.exception, null);
                 }
