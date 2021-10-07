@@ -1,8 +1,8 @@
 //se capturan los datos de la url
 var params = new URLSearchParams(location.search);
 //constante para guardar la ruta de la api
-const API_ESPACIO = `http://34.125.57.125/app/api/residente/espacios.php?id=${params.get('id')}&action=`;
-const ENDPOINT_ESTADO = `http://34.125.57.125/app/api/residente/espacios.php?id=${params.get('id')}&action=readSpaceStatus`;
+const API_ESPACIO = `http://34.125.88.216/app/api/residente/espacios.php?id=${params.get('id')}&action=`;
+const ENDPOINT_ESTADO = `http://34.125.88.216/app/api/residente/espacios.php?id=${params.get('id')}&action=readSpaceStatus`;
 
 
 //Evento que se ejecuta al cargar la pag
@@ -42,7 +42,7 @@ function fillTable(dataset) {
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <!-- Fila para Información -->
@@ -72,7 +72,7 @@ function fillTable(dataset) {
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="http://34.125.57.125/resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.88.216/resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <!-- Fila para Información -->
@@ -113,8 +113,8 @@ function fillTableImage(dataset) {
                                 <!-- Fila para Imagen -->
                                 <div class="row">
                                     <div class="col-12">
-                                    <a href="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagen}" data-lightbox="mygallery" data-image-alt="Image 1">
-                                        <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagen}" alt="Thumbnail 1" width="250px" height="150px" class="imagenTarjeta">
+                                    <a href="http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/${row.imagen}" data-lightbox="mygallery" data-image-alt="Image 1">
+                                        <img src="http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/${row.imagen}" alt="Thumbnail 1" width="250px" height="150px" class="imagenTarjeta">
                                     </a>                                    
                                 </div>
                                     </div>

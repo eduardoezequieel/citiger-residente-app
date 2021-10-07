@@ -1,5 +1,5 @@
 //Constante para la ruta API
-const API_USUARIO = 'http://34.125.57.125/app/api/residente/index.php?action=';
+const API_USUARIO = 'http://34.125.88.216/app/api/residente/index.php?action=';
 
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
     ipIndex = params.get('ip');
     if (idIndex > 0){
         // Constante para establecer la ruta y parámetros de comunicación con la API.
-        api_usuarioIndex = `http://34.125.57.125/app/api/caseta/usuarios.php?id=${id}&action=`;
+        api_usuarioIndex = `http://34.125.88.216/app/api/caseta/usuarios.php?id=${id}&action=`;
         
     } else {
         // Constante para establecer la ruta y parámetros de comunicación con la API.
-        api_usuarioIndex  = `http://34.125.57.125/app/api/caseta/usuarios.php?action=`;
+        api_usuarioIndex  = `http://34.125.88.216/app/api/caseta/usuarios.php?action=`;
         
     }
     //Método para activar usuario después de 24 horas
@@ -134,7 +134,7 @@ document.getElementById('checkCodeAuth-form').addEventListener('submit', functio
                 if (response.status) {
                     // Mostramos mensaje de exito
                     closeModal('verificarCodigoAuth');
-                    sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
                 } else {
                     sweetAlert(4, response.exception, null);
                 }
@@ -196,7 +196,7 @@ document.getElementById('90password-form').addEventListener('submit', function (
             request.json().then(response => {
                 //Verificando si la respuesta es satisfactoria de lo contrario se muestra la excepción
                 if (response.status) {
-                    sweetAlert(1, response.message, `html/dashboard.html?id=${response.idresidente}&alias=${response.username}&foto=${response.foto_residente}&modo=${response.modo_residente}&correo=${response.correo_residente}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
+                    sweetAlert(1, response.message, `html/dashboard.html?id=${document.getElementById('id').value}&alias=${document.getElementById('alias').value}&foto=${document.getElementById('foto').value}&modo=${document.getElementById('modo').value}&correo=${document.getElementById('correo').value}&ip=${document.getElementById('txtIP').value}&region=${document.getElementById('txtLoc').value}&sistema=${document.getElementById('txtOS').value}`);
                 } else {
                     sweetAlert(2, response.exception, null);
                 }

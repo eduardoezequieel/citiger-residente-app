@@ -1,9 +1,9 @@
 //se capturan los datos de la url
 var params = new URLSearchParams(location.search);
 //constante para la ruta de la api
-const API_ALQUILERES = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=`;
-const ENDPOINT_ESTADO_ALQUILER = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=readRentalStatus`;
-const ENDPOINT_ESPACIO_ALQUILERES = `http://34.125.57.125/app/api/residente/alquileres.php?id=${params.get('id')}&action=readSpace`;
+const API_ALQUILERES = `http://34.125.88.216/app/api/residente/alquileres.php?id=${params.get('id')}&action=`;
+const ENDPOINT_ESTADO_ALQUILER = `http://34.125.88.216/app/api/residente/alquileres.php?id=${params.get('id')}&action=readRentalStatus`;
+const ENDPOINT_ESPACIO_ALQUILERES = `http://34.125.88.216/app/api/residente/alquileres.php?id=${params.get('id')}&action=readSpace`;
 
 //Evento al terminar de cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
@@ -41,7 +41,7 @@ function fillTable(dataset){
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -71,7 +71,7 @@ function fillTable(dataset){
                         <!-- Fila para Imagen -->
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="http://34.125.57.125/resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                    <img src="http://34.125.88.216/resources/img/no-image.png" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                 </div>
                             </div>
                             <!-- Fila para Información -->
@@ -215,7 +215,7 @@ function fillTable2(dataset) {
                                 <!-- Fila para Imagen -->
                                 <div class="row">
                                     <div class="col-12">
-                                        <img src="http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
+                                        <img src="http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/${row.imagenprincipal}" alt="#" class="img-fluid fit-images fotoEspacio imagenTarjeta">
                                     </div>
                                 </div>
                                 <!-- Fila para Información -->
