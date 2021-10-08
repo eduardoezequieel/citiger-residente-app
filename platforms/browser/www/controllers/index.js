@@ -1,5 +1,5 @@
 //Constante para la ruta API
-const API_USUARIO = 'http://34.125.88.216/app/api/residente/index.php?action=';
+const API_USUARIO = 'http://34.125.57.125/app/api/residente/index.php?action=';
 
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
     ipIndex = params.get('ip');
     if (idIndex > 0){
         // Constante para establecer la ruta y parámetros de comunicación con la API.
-        api_usuarioIndex = `http://34.125.88.216/app/api/caseta/usuarios.php?id=${id}&action=`;
+        api_usuarioIndex = `http://34.125.57.125/app/api/caseta/usuarios.php?id=${id}&action=`;
         
     } else {
         // Constante para establecer la ruta y parámetros de comunicación con la API.
-        api_usuarioIndex  = `http://34.125.88.216/app/api/caseta/usuarios.php?action=`;
+        api_usuarioIndex  = `http://34.125.57.125/app/api/caseta/usuarios.php?action=`;
         
     }
     //Método para activar usuario después de 24 horas

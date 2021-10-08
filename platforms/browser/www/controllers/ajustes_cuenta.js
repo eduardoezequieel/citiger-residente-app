@@ -1,4 +1,4 @@
-const API_USUARIOS = 'http://34.125.88.216/app/api/residente/index.php?action=';
+const API_USUARIOS = 'http://34.125.57.125/app/api/residente/index.php?action=';
 //Captura los parametros de la url
 var params = new URLSearchParams(location.search);
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,8 +1,8 @@
 //se capturan los datos de la url
 var params = new URLSearchParams(location.search);
 //Constante para la direccion de la API
-const API_DASHBOARD = `http://34.125.88.216/app/api/residente/dashboard.php?id=${params.get('id')}&action=`;
-const API_USUARIOS = `http://34.125.88.216/app/api/residente/index.php?id=${params.get('id')}&action=`;
+const API_DASHBOARD = `http://34.125.57.125/app/api/residente/dashboard.php?id=${params.get('id')}&action=`;
+const API_USUARIOS = `http://34.125.57.125/app/api/residente/index.php?id=${params.get('id')}&action=`;
 //Se ejecutan al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     contadorDenuncias();

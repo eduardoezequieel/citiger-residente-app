@@ -11,7 +11,7 @@
 */
 //Constante para la ruta API
 const API_USUARIO2 = '../../app/api/dashboard/usuarios.php?action=';
-const API_RESIDENTES = 'http://34.125.88.216/app/api/residente/index.php?action=';
+const API_RESIDENTES = 'http://34.125.57.125/app/api/residente/index.php?action=';
 
 //Variables url
 var api_usuarioIndex;
@@ -96,9 +96,9 @@ function isLogged(id,alias,foto,modo,ip) {
     //Declarando apis cuando hay un usuario loggueado o no
     var api_nav;
     if (id > 0) {
-        api_nav = `http://34.125.88.216/app/api/residente/index.php?id=${id}&action=validateSession`;
+        api_nav = `http://34.125.57.125/app/api/residente/index.php?id=${id}&action=validateSession`;
     } else {
-        api_nav = `http://34.125.88.216/app/api/residente/index.php?action=validateSession`;
+        api_nav = `http://34.125.57.125/app/api/residente/index.php?action=validateSession`;
     }
     //Obteniendo si hay una sesión logueada
     fetch(api_nav).then(request=>{
@@ -123,7 +123,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                 <div id="tarjetaPerfil" class="p-3">
                                     <div class="row">
                                         <div class="col-3">
-                                            <img src="http://34.125.88.216/resources/img/dashboard_img/residentes_fotos/${foto}"
+                                            <img src="http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/${foto}"
                                                 id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
                                         <div class="col-9">
                                             <label for="ajustes" class="pl-4 pt-2" id="usuario">${alias}</label>
@@ -188,7 +188,7 @@ function isLogged(id,alias,foto,modo,ip) {
                                             <div id="tarjetaPerfil" class="p-3">
                                                 <div class="row">
                                                     <div class="col-3">
-                                                        <img src="http://34.125.88.216/resources/img/dashboard_img/residentes_fotos/${foto}"
+                                                        <img src="http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/${foto}"
                                                         id="fotoPerfil" alt="" class="rounded-circle fit-images" width="60px" height="60px"> </div>
                                                     <div class="col-9">
                                                         <label for="ajustes" class="pl-4 pt-2" id="usuario">${alias}</label>
@@ -465,13 +465,13 @@ function previewSavePicture(idDivFoto, name, foto) {
             ruta = '../../resources/img/dashboard_img/empleados_fotos/'
             break;
         case 3:
-            ruta = 'http://34.125.88.216/resources/img/dashboard_img/residentes_fotos/';
+            ruta = 'http://34.125.57.125/resources/img/dashboard_img/residentes_fotos/';
             break;
         case 4:
             ruta = '../../resources/img/dashboard_img/materiales_fotos/';
             break;
         case 5:
-            ruta = 'http://34.125.88.216/resources/img/dashboard_img/espacios_fotos/';
+            ruta = 'http://34.125.57.125/resources/img/dashboard_img/espacios_fotos/';
             break;
         default:
             break;
@@ -1364,7 +1364,7 @@ function logOut2() {
     }).then(function (value) {
         // Se verifica si fue cliqueado el botón Sí para hacer la petición de cerrar sesión, de lo contrario se muestra un mensaje.
         if (value) {
-            fetch(`http://34.125.88.216/app/api/residente/index.php?action=logOut&id=${params.get('id')}`, {
+            fetch(`http://34.125.57.125/app/api/residente/index.php?action=logOut&id=${params.get('id')}`, {
                 method: 'get'
             }).then(function (request) {
                 // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
