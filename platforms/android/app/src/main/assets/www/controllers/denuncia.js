@@ -1,8 +1,8 @@
 //se capturan los datos de la url
 var params = new URLSearchParams(location.search);
-const API_DENUNCIA = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=`;
-const ENDPOINT_ESTADO = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintStatus`;
-const ENDPOINT_TIPO = `http://34.125.57.125/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintType`;
+const API_DENUNCIA = `http://34.125.178.201/app/api/residente/denuncia.php?id=${params.get('id')}&action=`;
+const ENDPOINT_ESTADO = `http://34.125.178.201/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintStatus`;
+const ENDPOINT_TIPO = `http://34.125.178.201/app/api/residente/denuncia.php?id=${params.get('id')}&action=readComplaintType`;
 //Al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     fillSelect(ENDPOINT_ESTADO, 'cbEstadoDenuncia', null);
@@ -21,7 +21,7 @@ function fillTable(dataset) {
                 <th scope="row">
                     <div class="row paddingTh">
                         <div class="col-12">
-                            <img src="http://34.125.57.125/resources/img/userIcon.png" alt="#"
+                            <img src="http://34.125.178.201/resources/img/userIcon.png" alt="#"
                                 class="rounded-circle fit-images" width="30px" height="30px">
                         </div>
                     </div>
